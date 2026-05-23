@@ -59,8 +59,8 @@ export const Logo: React.FC<LogoProps> = ({
       </svg>
       {/* Brand Text */}
       <span className={`font-black tracking-wide ${textSize}`}>
-        <span className="text-purple-500">Org</span>
-        <span className={lightText ? 'text-white' : 'text-slate-300'}>Plus</span>
+        <span className="text-[#be185d]">Org</span>
+        <span className={lightText ? 'text-white' : 'text-slate-900'}>Plus</span>
       </span>
     </div>
   )

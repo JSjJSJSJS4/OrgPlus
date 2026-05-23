@@ -117,11 +117,21 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
     }
 
     try {
-      await eventService.assignCommittee(eventId, selectedUserId, commRole, commDept)
+      await eventService.assignCommittee(eventId, selectedUserId, commRole, commDept, 'assigned')
       showToast('Member Assigned', 'User added to the event committee list.', 'success')
       loadEventData()
     } catch (err: any) {
       showToast('Assignment Failed', err.message || 'Failed to assign committee', 'error')
+    }
+  }
+
+  const handleApproveCommittee = async (userId: string) => {
+    try {
+      await eventService.approveCommitteeStaff(eventId, userId)
+      showToast('Staff Approved', 'User has been assigned to the committee roster.', 'success')
+      loadEventData()
+    } catch (err: any) {
+      showToast('Approval Failed', err.message || 'Failed to approve application', 'error')
     }
   }
 
@@ -349,8 +359,8 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
         <div className="grid md:grid-cols-3 gap-6">
           
           {/* Assignment panel */}
-          <div className="md:col-span-1 glass-panel p-5 rounded-2xl border border-slate-800">
-            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide mb-4">Assign Committee Lead</h4>
+          <div className="md:col-span-1 glass-panel p-5 rounded-2xl border border-slate-200">
+            <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide mb-4">Assign Committee Lead</h4>
             
             {profiles.length === 0 ? (
               <p className="text-[10px] text-slate-500 leading-relaxed">
@@ -359,11 +369,11 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
             ) : (
               <form onSubmit={handleAssignCommittee} className="space-y-4">
                 <div>
-                  <label className="block text-[10px] text-slate-400 font-semibold mb-1">Select Member</label>
+                  <label className="block text-[10px] text-slate-500 font-semibold mb-1">Select Member</label>
                   <select
                     value={selectedUserId}
                     onChange={(e) => setSelectedUserId(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl glass-input text-xs"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800"
                   >
                     {profiles.map(p => (
                       <option key={p.id} value={p.id}>
@@ -374,26 +384,26 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-slate-400 font-semibold mb-1">Department / Area</label>
+                  <label className="block text-[10px] text-slate-500 font-semibold mb-1">Department / Area</label>
                   <select
                     value={commDept}
                     onChange={(e) => setCommDept(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl glass-input text-xs"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
                   >
                     <option value="Logistics">Logistics Coordinator</option>
                     <option value="Technical">Technical Operations</option>
                     <option value="Marketing">Marketing & Swag</option>
                     <option value="Finance">Finance & Budget</option>
-                    <option value="Technical">Program Host</option>
+                    <option value="Program">Program Host</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-slate-400 font-semibold mb-1">Committee Role</label>
+                  <label className="block text-[10px] text-slate-500 font-semibold mb-1">Committee Role</label>
                   <select
                     value={commRole}
                     onChange={(e) => setCommRole(e.target.value as any)}
-                    className="w-full px-3 py-2.5 rounded-xl glass-input text-xs"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
                   >
                     <option value="member">Staff Member</option>
                     <option value="coordinator">Coordinator Lead</option>
@@ -412,63 +422,142 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
           </div>
 
           {/* Committee assignments roster */}
-          <div className="md:col-span-2 glass-panel rounded-2xl border border-slate-800 overflow-hidden flex flex-col justify-between">
-            <div>
-              <div className="bg-slate-950/40 p-4 border-b border-slate-800">
-                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide">Allocated Committee Roster</h4>
-              </div>
-              
-              {comms.length === 0 ? (
-                <div className="p-12 text-center text-slate-500 text-xs">
-                  No committee assignments created. Use the left panel to delegate tasks!
+          <div className="md:col-span-2 space-y-6">
+            
+            {/* Active Roster */}
+            <div className="glass-panel rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between">
+              <div>
+                <div className="bg-slate-50 p-4 border-b border-slate-200">
+                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Allocated Committee Roster</h4>
                 </div>
-              ) : (
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead>
-                    <tr className="bg-slate-950/10 border-b border-slate-800 text-slate-500 text-[10px]">
-                      <th className="p-4 font-semibold">User</th>
-                      <th className="p-4 font-semibold">Department</th>
-                      <th className="p-4 font-semibold">Committee Role</th>
-                      <th className="p-4 font-semibold text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-900">
-                    {comms.map(comm => (
-                      <tr key={comm.id} className="hover:bg-slate-900/10">
-                        <td className="p-4 flex items-center gap-3">
-                          <img
-                            src={comm.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${comm.profiles?.full_name}`}
-                            alt={comm.profiles?.full_name}
-                            className="w-7 h-7 rounded-full bg-slate-800"
-                          />
-                          <div>
-                            <p className="font-semibold text-slate-200">{comm.profiles?.full_name}</p>
-                          </div>
-                        </td>
-                        <td className="p-4 text-slate-300 font-bold">{comm.department}</td>
-                        <td className="p-4">
-                          <span className={`px-2 py-0.5 rounded text-[8px] font-extrabold uppercase border ${
-                            comm.role === 'head' 
-                              ? 'border-purple-500/30 bg-purple-950/20 text-purple-400' 
-                              : 'border-slate-800 bg-slate-900 text-slate-400'
-                          }`}>
-                            {comm.role}
-                          </span>
-                        </td>
-                        <td className="p-4 text-right">
-                          <button
-                            onClick={() => handleRemoveCommittee(comm.user_id)}
-                            className="p-1.5 border border-rose-950 text-rose-400 hover:text-white hover:bg-rose-600 rounded-lg transition-all cursor-pointer inline-flex"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </td>
+                
+                {comms.filter(c => c.status !== 'pending').length === 0 ? (
+                  <div className="p-12 text-center text-slate-500 text-xs">
+                    No active committee assignments created. Use the left panel to delegate tasks!
+                  </div>
+                ) : (
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-slate-100/50 border-b border-slate-200 text-slate-550 text-[10px]">
+                        <th className="p-4 font-semibold">User</th>
+                        <th className="p-4 font-semibold">Department</th>
+                        <th className="p-4 font-semibold">Committee Role</th>
+                        <th className="p-4 font-semibold text-right">Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {comms.filter(c => c.status !== 'pending').map(comm => (
+                        <tr key={comm.id} className="hover:bg-slate-50/50">
+                          <td className="p-4 flex items-center gap-3">
+                            <img
+                              src={comm.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${comm.profiles?.full_name}`}
+                              alt={comm.profiles?.full_name}
+                              className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200"
+                            />
+                            <div>
+                              <p className="font-semibold text-slate-800">{comm.profiles?.full_name}</p>
+                              <p className="text-[9px] text-slate-400">{comm.profiles?.email}</p>
+                            </div>
+                          </td>
+                          <td className="p-4 text-slate-700 font-bold">{comm.department}</td>
+                          <td className="p-4">
+                            <span className={`px-2 py-0.5 rounded text-[8px] font-extrabold uppercase border ${
+                              comm.role === 'head' 
+                                ? 'border-[#be185d]/30 bg-[#fdf2f8] text-[#be185d]' 
+                                : comm.role === 'coordinator'
+                                ? 'border-blue-200 bg-blue-50 text-blue-750'
+                                : 'border-slate-200 bg-slate-100 text-slate-650'
+                            }`}>
+                              {comm.role}
+                            </span>
+                          </td>
+                          <td className="p-4 text-right">
+                            <button
+                              onClick={() => handleRemoveCommittee(comm.user_id)}
+                              className="p-1.5 border border-rose-200 hover:bg-rose-50 text-rose-600 rounded-lg transition-all cursor-pointer inline-flex"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
             </div>
+
+            {/* Pending Staff Applications */}
+            <div className="glass-panel rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between">
+              <div>
+                <div className="bg-amber-50/50 p-4 border-b border-slate-200">
+                  <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wide flex items-center gap-1.5">
+                    <ClipboardList className="w-4 h-4 text-amber-600 animate-pulse" /> Pending Staff Applications Queue
+                  </h4>
+                </div>
+                
+                {comms.filter(c => c.status === 'pending').length === 0 ? (
+                  <div className="p-8 text-center text-slate-500 text-xs">
+                    No pending staff applications for this event.
+                  </div>
+                ) : (
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-slate-100/50 border-b border-slate-200 text-slate-550 text-[10px]">
+                        <th className="p-4 font-semibold">User</th>
+                        <th className="p-4 font-semibold">Department</th>
+                        <th className="p-4 font-semibold">Requested Role</th>
+                        <th className="p-4 font-semibold text-right font-bold">Review Decision</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {comms.filter(c => c.status === 'pending').map(comm => (
+                        <tr key={comm.id} className="hover:bg-slate-50/50">
+                          <td className="p-4 flex items-center gap-3">
+                            <img
+                              src={comm.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${comm.profiles?.full_name}`}
+                              alt={comm.profiles?.full_name}
+                              className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200"
+                            />
+                            <div>
+                              <p className="font-semibold text-slate-800">{comm.profiles?.full_name}</p>
+                              <p className="text-[9px] text-slate-400">{comm.profiles?.email}</p>
+                            </div>
+                          </td>
+                          <td className="p-4 text-slate-700 font-bold">{comm.department}</td>
+                          <td className="p-4">
+                            <span className={`px-2 py-0.5 rounded text-[8px] font-extrabold uppercase border ${
+                              comm.role === 'coordinator'
+                                ? 'border-blue-200 bg-blue-50 text-blue-750'
+                                : 'border-slate-200 bg-slate-100 text-slate-650'
+                            }`}>
+                              {comm.role}
+                            </span>
+                          </td>
+                          <td className="p-4 text-right">
+                            <div className="flex gap-2 justify-end">
+                              <button
+                                onClick={() => handleApproveCommittee(comm.user_id)}
+                                className="px-2 py-1 bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-200 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
+                              >
+                                Approve
+                              </button>
+                              <button
+                                onClick={() => handleRemoveCommittee(comm.user_id)}
+                                className="px-2 py-1 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
+                              >
+                                Decline
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+
           </div>
         </div>
       )}

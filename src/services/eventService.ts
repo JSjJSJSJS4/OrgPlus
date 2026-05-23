@@ -232,7 +232,7 @@ export const eventService = {
     }
   },
 
-  async assignCommittee(eventId: string, userId: string, role: CommitteeRole, department: string): Promise<EventCommittee> {
+  async assignCommittee(eventId: string, userId: string, role: CommitteeRole, department: string, status: 'pending' | 'assigned' = 'assigned'): Promise<EventCommittee> {
     if (this.isMockMode) {
       const committees: EventCommittee[] = JSON.parse(localStorage.getItem('ep_mock_committees') || '[]')
       const existing = committees.find(c => c.event_id === eventId && c.user_id === userId)
@@ -240,7 +240,17 @@ export const eventService = {
       if (existing) {
         existing.role = role
         existing.department = department
+        existing.status = status
         saveStorage('ep_mock_committees', committees)
+        
+        // Auto-promote if status is assigned
+        if (status === 'assigned') {
+          const profilesList: any[] = JSON.parse(localStorage.getItem('ep_mock_profiles') || '[]')
+          const userProf = profilesList.find(p => p.id === userId)
+          if (userProf && userProf.role === 'member') {
+            await authService.updateProfile(userId, { role: 'committee_member' })
+          }
+        }
         return existing
       }
 
@@ -250,29 +260,71 @@ export const eventService = {
         user_id: userId,
         role,
         department,
+        status,
         created_at: new Date().toISOString()
       }
       committees.push(newComm)
       saveStorage('ep_mock_committees', committees)
 
-      // Promote to committee_member role if they are a regular member
-      const profilesList: any[] = JSON.parse(localStorage.getItem('ep_mock_profiles') || '[]')
-      const userProf = profilesList.find(p => p.id === userId)
-      if (userProf && userProf.role === 'member') {
-        await authService.updateProfile(userId, { role: 'committee_member' })
+      // Promote to committee_member role if they are a regular member and status is assigned
+      if (status === 'assigned') {
+        const profilesList: any[] = JSON.parse(localStorage.getItem('ep_mock_profiles') || '[]')
+        const userProf = profilesList.find(p => p.id === userId)
+        if (userProf && userProf.role === 'member') {
+          await authService.updateProfile(userId, { role: 'committee_member' })
+        }
       }
 
       return newComm
     } else {
       const { data, error } = await supabase
         .from('event_committees')
-        .insert({ event_id: eventId, user_id: userId, role, department })
+        .insert({ event_id: eventId, user_id: userId, role, department, status })
         .select()
         .single()
       
       if (error) throw error
       
-      // Attempt profile promotion
+      // Attempt profile promotion if assigned
+      if (status === 'assigned') {
+        const { data: userProf } = await supabase.from('profiles').select('role').eq('id', userId).single()
+        if (userProf && userProf.role === 'member') {
+          await authService.updateProfile(userId, { role: 'committee_member' })
+        }
+      }
+
+      return data as EventCommittee
+    }
+  },
+
+  async approveCommitteeStaff(eventId: string, userId: string): Promise<EventCommittee> {
+    if (this.isMockMode) {
+      const committees: EventCommittee[] = JSON.parse(localStorage.getItem('ep_mock_committees') || '[]')
+      const existing = committees.find(c => c.event_id === eventId && c.user_id === userId)
+      if (!existing) throw new Error('Committee application not found')
+
+      existing.status = 'assigned'
+      saveStorage('ep_mock_committees', committees)
+
+      // Promote profile
+      const profilesList: any[] = JSON.parse(localStorage.getItem('ep_mock_profiles') || '[]')
+      const userProf = profilesList.find(p => p.id === userId)
+      if (userProf && userProf.role === 'member') {
+        await authService.updateProfile(userId, { role: 'committee_member' })
+      }
+
+      return existing
+    } else {
+      const { data, error } = await supabase
+        .from('event_committees')
+        .update({ status: 'assigned' })
+        .eq('event_id', eventId)
+        .eq('user_id', userId)
+        .select()
+        .single()
+
+      if (error) throw error
+
       const { data: userProf } = await supabase.from('profiles').select('role').eq('id', userId).single()
       if (userProf && userProf.role === 'member') {
         await authService.updateProfile(userId, { role: 'committee_member' })

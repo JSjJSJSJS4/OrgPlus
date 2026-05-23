@@ -96,6 +96,7 @@ export interface EventCommittee {
   user_id: string
   role: CommitteeRole
   department: string
+  status?: 'pending' | 'assigned'
   created_at: string
   profiles?: Profile
 }

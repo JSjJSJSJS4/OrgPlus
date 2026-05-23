@@ -3,7 +3,7 @@ import { eventService } from '../../services/eventService'
 import { authService } from '../../services/authService'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../context/ToastContext'
-import { Event, EventRegistration, EventStatus } from '../../types'
+import { Event, EventRegistration, EventStatus, EventCommittee, CommitteeRole } from '../../types'
 import { 
   Calendar, 
   MapPin, 
@@ -45,6 +45,12 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
   // Event Detail State
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [selectedEventRegs, setSelectedEventRegs] = useState<EventRegistration[]>([])
+  const [selectedEventCommittees, setSelectedEventCommittees] = useState<EventCommittee[]>([])
+
+  // Committee Application State
+  const [applyRole, setApplyRole] = useState<CommitteeRole>('member')
+  const [applyDept, setApplyDept] = useState<string>('Logistics')
+  const [applyingStaff, setApplyingStaff] = useState<boolean>(false)
 
   const isOfficer = user?.role === 'officer' || user?.role === 'super_admin'
 
@@ -162,10 +168,44 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
   const openEventDetails = async (event: Event) => {
     setSelectedEvent(event)
     try {
-      const details = await eventService.getRegistrations(event.id)
+      const [details, comms] = await Promise.all([
+        eventService.getRegistrations(event.id),
+        eventService.getCommittees(event.id)
+      ])
       setSelectedEventRegs(details)
+      setSelectedEventCommittees(comms)
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  const handleApplyCommittee = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!selectedEvent || !user) return
+    setApplyingStaff(true)
+    try {
+      await eventService.assignCommittee(selectedEvent.id, user.id, applyRole, applyDept, 'pending')
+      showToast('Application Submitted', 'Your request to join the organizing committee is pending review.', 'success')
+      // Reload details
+      const comms = await eventService.getCommittees(selectedEvent.id)
+      setSelectedEventCommittees(comms)
+    } catch (err: any) {
+      showToast('Application Failed', err.message || 'Failed to submit committee application', 'error')
+    } finally {
+      setApplyingStaff(false)
+    }
+  }
+
+  const handleCancelCommitteeApplication = async (eventId: string) => {
+    if (!user) return
+    try {
+      await eventService.removeCommittee(eventId, user.id)
+      showToast('Application Withdrawn', 'Your committee application was successfully withdrawn.', 'info')
+      // Reload details
+      const comms = await eventService.getCommittees(eventId)
+      setSelectedEventCommittees(comms)
+    } catch (err: any) {
+      showToast('Error', err.message || 'Failed to withdraw application', 'error')
     }
   }
 
@@ -411,41 +451,41 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
 
       {/* DETAIL VIEW MODAL */}
       {selectedEvent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in">
           <div className="w-full max-w-xl glass-panel p-6 rounded-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setSelectedEvent(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white text-lg"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg cursor-pointer"
             >
               &times;
             </button>
 
-            <h3 className="text-lg font-bold text-white mb-2">{selectedEvent.title}</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">{selectedEvent.title}</h3>
             
             <div className="flex flex-wrap gap-2 mb-6">
-              <span className="text-[10px] font-bold text-purple-400 bg-purple-950/20 border border-purple-500/20 px-2.5 py-0.5 rounded-lg">
+              <span className="text-[10px] font-bold text-[#1e40af] bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-lg">
                 Date: {new Date(selectedEvent.date).toLocaleDateString()} at {new Date(selectedEvent.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
               </span>
-              <span className="text-[10px] font-bold text-blue-400 bg-blue-950/20 border border-blue-500/20 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
+              <span className="text-[10px] font-bold text-[#be185d] bg-[#fdf2f8] border border-[#be185d]/20 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
                 <MapPin className="w-3 h-3" /> {selectedEvent.location}
               </span>
             </div>
 
             <div className="space-y-4 mb-6">
-              <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide">Event Description</h4>
-              <p className="text-xs text-slate-300 leading-relaxed bg-slate-950/20 p-4 rounded-xl border border-slate-900">
+              <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Event Description</h4>
+              <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
                 {selectedEvent.description}
               </p>
             </div>
 
             {/* Attendance & Registration Board */}
             {selectedEvent.status !== 'proposal_pending' && selectedEvent.status !== 'rejected' && (
-              <div className="p-5 rounded-2xl bg-slate-900/30 border border-slate-800/80 flex flex-col justify-between">
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
                 <div>
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide mb-3 flex items-center gap-1.5">
-                    <Users className="w-4 h-4 text-purple-400" /> Attendance Roster ({selectedEventRegs.filter(r => r.status === 'registered').length} Registered)
+                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                    <Users className="w-4 h-4 text-[#1e40af]" /> Attendance Roster ({selectedEventRegs.filter(r => r.status === 'registered').length} Registered)
                   </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-500 leading-relaxed mb-4">
                     Register to reserve your slot. Only registered members can check in for attendance or review announcements.
                   </p>
                 </div>
@@ -454,7 +494,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                   {isUserRegistered(selectedEvent.id) ? (
                     <button
                       onClick={() => handleCancelRegistration(selectedEvent.id)}
-                      className="w-full py-2.5 border border-rose-900/30 bg-rose-950/15 hover:bg-rose-950/30 text-rose-400 text-xs font-bold rounded-xl transition-all cursor-pointer"
+                      className="w-full py-2.5 border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold rounded-xl transition-all cursor-pointer"
                     >
                       Cancel Registration Slot
                     </button>
@@ -470,16 +510,111 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
               </div>
             )}
 
+            {/* Organizing Committee Applications section */}
+            {selectedEvent.status !== 'proposal_pending' && selectedEvent.status !== 'rejected' && (
+              <div className="mt-4 border-t border-slate-100 pt-4">
+                {(() => {
+                  const myComm = selectedEventCommittees.find(c => c.user_id === user?.id)
+                  if (myComm) {
+                    if (myComm.status === 'pending') {
+                      return (
+                        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 space-y-3">
+                          <h4 className="font-bold uppercase tracking-wide flex items-center gap-1.5">
+                            <Clock className="w-4 h-4 text-amber-600" /> Organizing Committee Application Pending
+                          </h4>
+                          <p className="text-slate-600 leading-relaxed">
+                            You applied to join the organizing committee as a <strong>{myComm.role === 'coordinator' ? 'Coordinator Lead' : 'Staff Member'}</strong> in the <strong>{myComm.department}</strong> department.
+                          </p>
+                          <button
+                            onClick={() => handleCancelCommitteeApplication(selectedEvent.id)}
+                            className="px-3 py-1.5 border border-rose-200 hover:bg-rose-50 text-rose-600 rounded-lg transition-all text-[10px] font-bold cursor-pointer"
+                          >
+                            Withdraw Application
+                          </button>
+                        </div>
+                      )
+                    } else {
+                      return (
+                        <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-xs text-[#1e40af] space-y-2">
+                          <h4 className="font-bold uppercase tracking-wide flex items-center gap-1.5">
+                            <Check className="w-4 h-4 text-[#1e40af]" /> Organizing Committee Member
+                          </h4>
+                          <p className="text-slate-600 leading-relaxed">
+                            You are part of the organizing committee as a <strong>{myComm.role === 'head' ? 'Committee Head' : myComm.role === 'coordinator' ? 'Coordinator Lead' : 'Staff Member'}</strong> in the <strong>{myComm.department}</strong> department!
+                          </p>
+                        </div>
+                      )
+                    }
+                  } else if (!isOfficer) {
+                    return (
+                      <form onSubmit={handleApplyCommittee} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4">
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <Activity className="w-4 h-4 text-[#be185d]" /> Join Organizing Committee
+                          </h4>
+                          <p className="text-[11px] text-slate-500 leading-relaxed">
+                            Want to help run this event? Select your preferred department and position choice below to submit your staff application.
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[10px] text-slate-500 font-semibold mb-1">Department</label>
+                            <select
+                              value={applyDept}
+                              onChange={(e) => setApplyDept(e.target.value)}
+                              className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
+                            >
+                              <option value="Logistics">Logistics</option>
+                              <option value="Technical">Technical Operations</option>
+                              <option value="Marketing">Marketing & Swag</option>
+                              <option value="Finance">Finance & Budget</option>
+                              <option value="Program">Program Host</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] text-slate-500 font-semibold mb-1">Position Choices</label>
+                            <select
+                              value={applyRole}
+                              onChange={(e) => setApplyRole(e.target.value as any)}
+                              className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
+                            >
+                              <option value="member">Staff Member</option>
+                              <option value="coordinator">Coordinator Lead</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <button
+                          type="submit"
+                          disabled={applyingStaff}
+                          className="w-full py-2.5 bg-[#be185d] hover:bg-[#db2777] text-white text-xs font-bold rounded-xl shadow-lg cursor-pointer flex items-center justify-center gap-1"
+                        >
+                          {applyingStaff ? (
+                            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                          ) : (
+                            'Submit Committee Application'
+                          )}
+                        </button>
+                      </form>
+                    )
+                  }
+                  return null
+                })()}
+              </div>
+            )}
+
             {/* Proposal notes if pending or reviewed */}
             {selectedEvent.status === 'proposal_pending' && (
-              <div className="p-4 bg-amber-950/10 border border-amber-500/20 rounded-xl text-xs text-amber-400 flex items-start gap-2">
-                <Info className="w-4 h-4 shrink-0 mt-0.5" />
+              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-start gap-2 mt-4">
+                <Info className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
                 <span>This event is currently in the officer proposal queue. Registration will open once approved.</span>
               </div>
             )}
 
             {selectedEvent.approval_notes && (
-              <div className="mt-4 p-4 bg-slate-900/50 rounded-xl border border-slate-800 text-[10px] text-slate-400">
+              <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200 text-[10px] text-slate-600">
                 <strong>Officer Review Notes:</strong> {selectedEvent.approval_notes}
               </div>
             )}

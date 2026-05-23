@@ -100,6 +100,7 @@ create table public.event_committees (
     user_id uuid references public.profiles(id) on delete cascade not null,
     role committee_role not null default 'member',
     department text not null, -- e.g. Logistics, Marketing, Technical, Finance
+    status text not null default 'assigned',
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     constraint unique_event_user_committee unique (event_id, user_id)
 );
@@ -190,6 +191,8 @@ create policy "Allow officers/admins and committee heads to manage committees" o
 ) or exists (
     select 1 from public.event_committees head where head.event_id = event_id and head.user_id = auth.uid() and head.role = 'head'
 ));
+create policy "Allow members to insert own pending committee application" on public.event_committees for insert with check (auth.uid() = user_id and status = 'pending');
+create policy "Allow members to delete own pending committee application" on public.event_committees for delete using (auth.uid() = user_id and status = 'pending');
 
 -- Event Registrations Policies
 create policy "Allow registered users to view their registrations" on public.event_registrations for select using (auth.uid() = user_id or exists (

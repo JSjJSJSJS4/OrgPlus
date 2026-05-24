@@ -52,12 +52,12 @@ export const ProfilePage: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       
-      <div className="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row items-center gap-6">
+      <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center gap-6">
         <div className="relative group shrink-0">
           <img
             src={avatarUrl || `https://api.dicebear.com/7.x/adventurer/svg?seed=${user.full_name}`}
             alt={user.full_name}
-            className="w-24 h-24 rounded-3xl bg-slate-800 border-2 border-purple-500/30 object-cover"
+            className="w-24 h-24 rounded-3xl bg-slate-100 dark:bg-slate-800 border-2 border-purple-500/30 object-cover"
           />
           <div className="absolute inset-0 bg-black/40 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
             <Camera className="w-6 h-6 text-white" />
@@ -65,26 +65,26 @@ export const ProfilePage: React.FC = () => {
         </div>
 
         <div className="text-center md:text-left overflow-hidden">
-          <h2 className="text-lg font-bold text-white leading-tight">{user.full_name}</h2>
-          <p className="text-xs text-slate-400 mt-1">{user.email}</p>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">{user.full_name}</h2>
+          <p className="text-xs text-slate-605 dark:text-slate-400 mt-1">{user.email}</p>
           <div className="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
-            <span className="px-3 py-1 rounded-xl text-[10px] font-bold border border-purple-500/20 text-purple-400 bg-purple-950/20 flex items-center gap-1">
+            <span className="px-3 py-1 rounded-xl text-[10px] font-bold border border-purple-200 text-purple-700 bg-purple-50 dark:border-purple-500/20 dark:text-purple-400 dark:bg-purple-950/20 flex items-center gap-1">
               <Award className="w-3.5 h-3.5" /> Role Level: <strong className="uppercase">{user.role.replace('_', ' ')}</strong>
             </span>
-            <span className="px-3 py-1 rounded-xl text-[10px] font-bold border border-blue-500/20 text-blue-400 bg-blue-950/20 flex items-center gap-1">
+            <span className="px-3 py-1 rounded-xl text-[10px] font-bold border border-blue-200 text-blue-700 bg-blue-50 dark:border-blue-500/20 dark:text-blue-400 dark:bg-blue-950/20 flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5" /> Permissions Secured
             </span>
           </div>
         </div>
       </div>
 
-      <div className="glass-panel p-6 rounded-2xl border border-slate-800">
-        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-6 border-b border-slate-900 pb-3">Edit Profile Settings</h3>
+      <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+        <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-6 border-b border-slate-100 dark:border-slate-900 pb-3">Edit Profile Settings</h3>
         
         <form onSubmit={handleUpdateProfile} className="space-y-5">
           <div>
-            <label className="block text-xs text-slate-400 font-semibold mb-1.5 flex items-center gap-1">
-              <User className="w-4 h-4 text-purple-400" /> Full Name
+            <label className="block text-xs text-slate-600 dark:text-slate-400 font-semibold mb-1.5 flex items-center gap-1">
+              <User className="w-4 h-4 text-purple-650 dark:text-purple-400" /> Full Name
             </label>
             <input
               type="text"
@@ -95,19 +95,19 @@ export const ProfilePage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs text-slate-400 font-semibold mb-1.5 flex items-center gap-1">
-              <Mail className="w-4 h-4 text-purple-400" /> Email Address (Read-only)
+            <label className="block text-xs text-slate-600 dark:text-slate-400 font-semibold mb-1.5 flex items-center gap-1">
+              <Mail className="w-4 h-4 text-purple-650 dark:text-purple-400" /> Email Address (Read-only)
             </label>
             <input
               type="email"
               disabled
               value={user.email}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900/50 border border-slate-900 text-xs text-slate-500 font-semibold cursor-not-allowed"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-100 border border-slate-200 dark:bg-slate-900/50 dark:border-slate-900 text-xs text-slate-450 dark:text-slate-500 font-semibold cursor-not-allowed"
             />
           </div>
 
           <div>
-            <label className="block text-xs text-slate-400 font-semibold mb-2">Select Avatar Seed (Dicebear Style)</label>
+            <label className="block text-xs text-slate-600 dark:text-slate-400 font-semibold mb-2">Select Avatar Seed (Dicebear Style)</label>
             <div className="flex flex-wrap gap-2">
               {avatarSeeds.map(seed => {
                 const url = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}`
@@ -118,7 +118,7 @@ export const ProfilePage: React.FC = () => {
                     type="button"
                     onClick={() => setAvatarUrl(url)}
                     className={`p-1 rounded-xl border-2 transition-all shrink-0 cursor-pointer ${
-                      isSelected ? 'border-purple-500 bg-purple-950/20' : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'
+                      isSelected ? 'border-purple-500 bg-purple-50 dark:bg-purple-950/20' : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
                     <img src={url} alt={seed} className="w-10 h-10 rounded-lg" />

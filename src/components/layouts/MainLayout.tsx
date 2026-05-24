@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import { Logo } from '../common/Logo'
 import { 
   LogOut, 
@@ -13,7 +14,9 @@ import {
   CheckSquare, 
   FolderLock, 
   TrendingUp,
-  User
+  User,
+  Sun,
+  Moon
 } from 'lucide-react'
 
 interface MainLayoutProps {
@@ -25,6 +28,7 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children, currentTab, setCurrentTab, onEnterPreview }) => {
   const { user, signOut, isMockMode } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   if (!user) return null
@@ -59,21 +63,31 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children, currentTab, se
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col md:flex-row relative">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 flex flex-col md:flex-row relative">
       
       {/* Background Orbs */}
       <div className="absolute top-10 left-10 w-96 h-96 bg-[#be185d]/3 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-blue-600/3 rounded-full blur-[150px] pointer-events-none"></div>
 
       {/* MOBILE HEADER */}
-      <div className="md:hidden flex items-center justify-between px-6 py-4 glass-panel border-b border-slate-200 z-30">
+      <div className="md:hidden flex items-center justify-between px-6 py-4 glass-panel border-b border-slate-200 dark:border-slate-800/80 z-30">
         <Logo iconSize="w-7 h-7" textSize="text-base" lightText={false} />
-        <button 
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 rounded-lg text-slate-650 hover:text-slate-950 bg-slate-100 border border-slate-200"
-        >
-          {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle Mobile */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-xl border border-slate-200 dark:border-slate-850 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer"
+            title="Toggle Theme"
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+          </button>
+          <button 
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="p-2 rounded-lg text-slate-650 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+          >
+            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* SIDEBAR */}
@@ -156,15 +170,23 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children, currentTab, se
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 md:h-screen overflow-y-auto">
         {/* Top Navbar */}
-        <header className="hidden md:flex items-center justify-between px-8 py-4 bg-white/40 border-b border-slate-200 backdrop-blur-md sticky top-0 z-20">
+        <header className="hidden md:flex items-center justify-between px-8 py-4 bg-white/40 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur-md sticky top-0 z-20">
           <div>
-            <h2 className="text-lg font-bold text-slate-900 capitalize">{currentTab.replace('-', ' ')}</h2>
-            <p className="text-[10px] text-slate-500 mt-0.5">Welcome back, {user.full_name} • OrgPlus Hub</p>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white capitalize">{currentTab.replace('-', ' ')}</h2>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Welcome back, {user.full_name} • OrgPlus Hub</p>
           </div>
           <div className="flex items-center gap-4">
+            {/* Theme Toggle Desktop */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer"
+              title="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+            </button>
             <div className="text-right">
-              <p className="text-xs font-semibold text-slate-700">Active Session</p>
-              <p className="text-[10px] text-slate-500">{user.email}</p>
+              <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">Active Session</p>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400">{user.email}</p>
             </div>
           </div>
         </header>

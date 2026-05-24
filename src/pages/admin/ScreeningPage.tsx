@@ -74,21 +74,21 @@ export const ScreeningPage: React.FC = () => {
   }
 
   const columns: { id: ApplicationStatus; title: string; colorClass: string; borderClass: string }[] = [
-    { id: 'pending', title: 'Pending Review', colorClass: 'text-amber-400 bg-amber-500/10', borderClass: 'border-amber-500/20' },
-    { id: 'screening', title: 'Screening', colorClass: 'text-blue-400 bg-blue-500/10', borderClass: 'border-blue-500/20' },
-    { id: 'interview', title: 'Interview Round', colorClass: 'text-purple-400 bg-purple-500/10', borderClass: 'border-purple-500/20' },
-    { id: 'approved', title: 'Approved', colorClass: 'text-emerald-400 bg-emerald-500/10', borderClass: 'border-emerald-500/20' },
-    { id: 'rejected', title: 'Rejected', colorClass: 'text-rose-400 bg-rose-500/10', borderClass: 'border-rose-500/20' }
+    { id: 'pending', title: 'Pending Review', colorClass: 'text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-500/10 border border-amber-200 dark:border-transparent', borderClass: 'border-amber-200 dark:border-amber-500/20' },
+    { id: 'screening', title: 'Screening', colorClass: 'text-blue-700 bg-blue-50 dark:text-blue-400 dark:bg-blue-500/10 border border-blue-200 dark:border-transparent', borderClass: 'border-blue-200 dark:border-blue-500/20' },
+    { id: 'interview', title: 'Interview Round', colorClass: 'text-purple-700 bg-purple-50 dark:text-purple-400 dark:bg-purple-500/10 border border-purple-200 dark:border-transparent', borderClass: 'border-purple-200 dark:border-purple-500/20' },
+    { id: 'approved', title: 'Approved', colorClass: 'text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-500/10 border border-emerald-200 dark:border-transparent', borderClass: 'border-emerald-200 dark:border-emerald-500/20' },
+    { id: 'rejected', title: 'Rejected', colorClass: 'text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-500/10 border border-rose-200 dark:border-transparent', borderClass: 'border-rose-200 dark:border-rose-500/20' }
   ]
 
   return (
     <div className="space-y-6">
       
       {/* Header Panel */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900/40 p-6 rounded-2xl border border-slate-800/80">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 dark:bg-slate-900/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-800/80">
         <div>
-          <h2 className="text-xl font-bold text-white">Applicant Screening Board</h2>
-          <p className="text-xs text-slate-400 mt-1">Review candidates, progress them through interviews, and approve onboarding workflows.</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Applicant Screening Board</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Review candidates, progress them through interviews, and approve onboarding workflows.</p>
         </div>
         
         {/* Search */}
@@ -115,13 +115,13 @@ export const ScreeningPage: React.FC = () => {
           {columns.map(col => {
             const list = filterByStatus(col.id)
             return (
-              <div key={col.id} className="min-w-[220px] flex flex-col rounded-2xl bg-slate-950/20 border border-slate-900 p-4 min-h-[500px]">
+              <div key={col.id} className="min-w-[220px] flex flex-col rounded-2xl bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 p-4 min-h-[500px]">
                 {/* Column Header */}
-                <div className="flex justify-between items-center mb-4 pb-2 border-b border-slate-900">
+                <div className="flex justify-between items-center mb-4 pb-2 border-b border-slate-200 dark:border-slate-900">
                   <span className={`px-2.5 py-0.5 rounded-lg text-[10px] font-bold ${col.colorClass}`}>
                     {col.title}
                   </span>
-                  <span className="text-[10px] text-slate-500 font-bold bg-slate-900 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] text-slate-600 dark:text-slate-500 font-bold bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded-full">
                     {list.length}
                   </span>
                 </div>
@@ -129,7 +129,7 @@ export const ScreeningPage: React.FC = () => {
                 {/* Cards Container */}
                 <div className="space-y-3 flex-1 overflow-y-auto max-h-[600px] scrollbar-none">
                   {list.length === 0 ? (
-                    <div className="text-center py-8 text-[10px] text-slate-600 border border-dashed border-slate-800/80 rounded-xl">
+                    <div className="text-center py-8 text-[10px] text-slate-500 dark:text-slate-600 border border-dashed border-slate-200 dark:border-slate-800/80 rounded-xl">
                       Empty column
                     </div>
                   ) : (
@@ -146,22 +146,22 @@ export const ScreeningPage: React.FC = () => {
                           <img
                             src={app.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${app.profiles?.full_name}`}
                             alt={app.profiles?.full_name}
-                            className="w-6 h-6 rounded-full bg-slate-800"
+                            className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800"
                           />
-                          <span className="text-xs font-bold text-white truncate max-w-[120px]">
+                          <span className="text-xs font-bold text-slate-800 dark:text-white truncate max-w-[120px]">
                             {app.profiles?.full_name}
                           </span>
                         </div>
                         
-                        <p className="text-[9px] text-slate-500 mt-2 truncate">
+                        <p className="text-[9px] text-slate-500 dark:text-slate-400 mt-2 truncate">
                           {app.recruitment_campaigns?.title}
                         </p>
-
-                        <div className="mt-4 flex justify-between items-center text-[9px] text-slate-400">
-                          <span className="bg-slate-900 px-1.5 py-0.5 rounded">
+ 
+                        <div className="mt-4 flex justify-between items-center text-[9px] text-slate-550 dark:text-slate-400">
+                          <span className="bg-slate-100 dark:bg-slate-900 px-1.5 py-0.5 rounded">
                             {app.recruitment_campaigns?.type}
                           </span>
-                          <span className="text-purple-400 flex items-center gap-0.5 font-semibold">
+                          <span className="text-purple-600 dark:text-purple-400 flex items-center gap-0.5 font-semibold">
                             Review <ChevronRight className="w-2.5 h-2.5" />
                           </span>
                         </div>
@@ -187,20 +187,20 @@ export const ScreeningPage: React.FC = () => {
             </button>
 
             {/* Profile Info */}
-            <div className="flex items-center gap-4 border-b border-slate-900 pb-4 mb-6">
+            <div className="flex items-center gap-4 border-b border-slate-200 dark:border-slate-900 pb-4 mb-6">
               <img
                 src={selectedApp.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${selectedApp.profiles?.full_name}`}
                 alt={selectedApp.profiles?.full_name}
-                className="w-14 h-14 rounded-2xl bg-slate-800 border border-slate-700"
+                className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
               />
               <div>
-                <h3 className="text-base font-bold text-white leading-tight">{selectedApp.profiles?.full_name}</h3>
-                <p className="text-xs text-slate-400 mt-0.5">{selectedApp.profiles?.email}</p>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white leading-tight">{selectedApp.profiles?.full_name}</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{selectedApp.profiles?.email}</p>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-[10px] px-2 py-0.5 bg-slate-900 rounded border border-slate-800 text-slate-300">
-                    Applying for: <strong className="text-purple-400 capitalize">{selectedApp.recruitment_campaigns?.type}</strong>
+                  <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+                    Applying for: <strong className="text-purple-605 dark:text-purple-400 capitalize">{selectedApp.recruitment_campaigns?.type}</strong>
                   </span>
-                  <span className="text-[10px] text-slate-500">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">
                     Applied on {new Date(selectedApp.created_at).toLocaleDateString()}
                   </span>
                 </div>
@@ -209,25 +209,25 @@ export const ScreeningPage: React.FC = () => {
 
             {/* Answers & Resume */}
             <div className="space-y-4 mb-6">
-              <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide">Questionnaire Submissions</h4>
+              <h4 className="text-xs font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wide">Questionnaire Submissions</h4>
               {Object.entries(selectedApp.answers).map(([question, answer]) => (
-                <div key={question} className="p-3 bg-slate-950/40 rounded-xl border border-slate-900">
-                  <p className="text-[11px] font-bold text-purple-300">{question}</p>
-                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{answer}</p>
+                <div key={question} className="p-3 bg-slate-50 dark:bg-slate-950/40 rounded-xl border border-slate-200 dark:border-slate-900">
+                  <p className="text-[11px] font-bold text-purple-700 dark:text-purple-300">{question}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">{answer}</p>
                 </div>
               ))}
 
               {selectedApp.resume_url && (
-                <div className="flex items-center justify-between p-3 bg-slate-950/20 rounded-xl border border-slate-900/60">
-                  <div className="flex items-center gap-2 text-slate-300 text-xs">
-                    <FileText className="w-4 h-4 text-purple-400" />
+                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-950/20 rounded-xl border border-slate-200 dark:border-slate-900/60">
+                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-xs">
+                    <FileText className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                     <span>Attached resume or portfolio document</span>
                   </div>
                   <a
                     href={selectedApp.resume_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 text-[10px] text-purple-400 hover:text-purple-300 transition-colors"
+                    className="flex items-center gap-1 text-[10px] text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300 transition-colors"
                   >
                     Open Link <ExternalLink className="w-3 h-3" />
                   </a>
@@ -236,9 +236,9 @@ export const ScreeningPage: React.FC = () => {
             </div>
 
             {/* Feedback & Screening Control Panel */}
-            <div className="p-5 rounded-2xl bg-slate-900/30 border border-slate-800/80">
-              <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide mb-3 flex items-center gap-1.5">
-                <MessageSquare className="w-4 h-4 text-purple-400" /> Screening Decisions & Candidate Feedback
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800/80">
+              <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                <MessageSquare className="w-4 h-4 text-purple-600 dark:text-purple-400" /> Screening Decisions & Candidate Feedback
               </h4>
               <textarea
                 value={feedbackNotes}

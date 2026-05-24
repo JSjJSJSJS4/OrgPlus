@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import { Logo } from '../common/Logo'
-import { LogOut, User, Menu, X, ArrowLeft } from 'lucide-react'
+import { LogOut, User, Menu, X, ArrowLeft, Sun, Moon } from 'lucide-react'
 
 interface PublicLayoutProps {
   children: React.ReactNode
@@ -19,6 +20,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({
   onExitPreview
 }) => {
   const { user, signOut } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -66,7 +68,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col relative">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 flex flex-col relative">
       {/* Background Radial Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#be185d]/3 rounded-full blur-[120px] pointer-events-none z-0"></div>
       <div className="absolute bottom-0 right-10 w-[400px] h-[400px] bg-blue-600/3 rounded-full blur-[140px] pointer-events-none z-0"></div>
@@ -88,7 +90,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({
       )}
 
       {/* TOP NAVBAR */}
-      <header className="sticky top-0 z-30 backdrop-blur-md bg-white/75 border-b border-slate-200">
+      <header className="sticky top-0 z-30 backdrop-blur-md bg-white/75 dark:bg-slate-900/75 border-b border-slate-200 dark:border-slate-800/80">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo Brand */}
           <div className="cursor-pointer" onClick={() => handleNavClick('home')}>
@@ -117,6 +119,14 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({
 
           {/* User Account Controls */}
           <div className="hidden md:flex items-center gap-4 relative">
+            {/* Theme Toggle Desktop */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer"
+              title="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+            </button>
             <div className="text-right">
               <p className="text-[10px] text-slate-500 leading-tight">Signed in as</p>
               <p className="text-xs font-bold text-slate-800 leading-tight mt-0.5">{user.full_name}</p>
@@ -163,9 +173,17 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({
 
           {/* Mobile Menu Triggers */}
           <div className="md:hidden flex items-center gap-3">
+            {/* Theme Toggle Mobile */}
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all cursor-pointer"
+              title="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+            </button>
             <button 
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="w-8 h-8 rounded-lg overflow-hidden border border-slate-200 flex items-center justify-center shrink-0"
+              className="w-8 h-8 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0"
             >
               <img 
                 src={user.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${user.full_name}`} 

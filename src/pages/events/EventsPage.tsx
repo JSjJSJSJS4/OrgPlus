@@ -217,14 +217,14 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
     <div className="space-y-6">
       
       {/* Filters Row */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setFilter('upcoming')}
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               filter === 'upcoming'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
-                : 'bg-slate-900/50 hover:bg-slate-900 text-slate-400 border border-slate-800/80'
+                : 'bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80'
             }`}
           >
             Upcoming
@@ -234,7 +234,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               filter === 'ongoing'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
-                : 'bg-slate-900/50 hover:bg-slate-900 text-slate-400 border border-slate-800/80'
+                : 'bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80'
             }`}
           >
             Ongoing
@@ -244,7 +244,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               filter === 'completed'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
-                : 'bg-slate-900/50 hover:bg-slate-900 text-slate-400 border border-slate-800/80'
+                : 'bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80'
             }`}
           >
             Completed
@@ -254,7 +254,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
               filter === 'my-registrations'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
-                : 'bg-slate-900/50 hover:bg-slate-900 text-slate-400 border border-slate-800/80'
+                : 'bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80'
             }`}
           >
             My Registrations
@@ -265,7 +265,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
               className={`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
                 filter === 'all'
                   ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
-                  : 'bg-slate-900/50 hover:bg-slate-900 text-slate-400 border border-slate-800/80'
+                  : 'bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80'
               }`}
             >
               All Proposals
@@ -275,7 +275,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
 
         <button
           onClick={() => setShowProposeModal(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-button text-xs font-bold rounded-xl shadow-lg cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-button text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer"
         >
           <Plus className="w-4 h-4" /> Propose Event
         </button>
@@ -284,16 +284,16 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <span className="w-10 h-10 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></span>
-          <p className="text-xs text-slate-400 font-semibold">Fetching scheduled events...</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Fetching scheduled events...</p>
         </div>
       ) : (
         /* EVENTS GRID */
         <div className="grid md:grid-cols-3 gap-6">
           {filteredEvents.length === 0 ? (
-            <div className="md:col-span-3 glass-panel p-12 text-center rounded-2xl">
-              <Calendar className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-300 font-bold text-sm">No Events Scheduled</p>
-              <p className="text-slate-500 text-xs mt-1">Check back later or submit an event proposal above!</p>
+            <div className="md:col-span-3 glass-panel border border-slate-200 dark:border-slate-800/80 p-12 text-center rounded-2xl">
+              <Calendar className="w-12 h-12 text-slate-400 dark:text-slate-600 mx-auto mb-4" />
+              <p className="text-slate-700 dark:text-slate-300 font-bold text-sm">No Events Scheduled</p>
+              <p className="text-slate-505 text-xs mt-1">Check back later or submit an event proposal above!</p>
             </div>
           ) : (
             filteredEvents.map(event => {
@@ -301,29 +301,29 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
               let statusBadge = null
               
               if (event.status === 'proposal_pending') {
-                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-amber-500/10 border border-amber-500/30 text-amber-400">Proposal Pending</span>
+                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-400">Proposal Pending</span>
               } else if (event.status === 'ongoing') {
-                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-1"><Activity className="w-3 h-3 animate-pulse" /> Live Now</span>
+                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400 flex items-center gap-1"><Activity className="w-3 h-3 animate-pulse" /> Live Now</span>
               } else if (event.status === 'completed') {
-                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-slate-900 border border-slate-800 text-slate-400">Completed</span>
+                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-slate-105 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400">Completed</span>
               } else if (event.status === 'rejected') {
-                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-rose-500/10 border border-rose-500/30 text-rose-400">Proposal Rejected</span>
+                statusBadge = <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-bold bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-705 dark:text-rose-400">Proposal Rejected</span>
               }
 
               return (
-                <div key={event.id} className="rounded-2xl glass-panel glass-panel-hover p-6 flex flex-col justify-between">
+                <div key={event.id} className="rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 glass-panel-hover p-6 flex flex-col justify-between">
                   <div>
                     <div className="flex justify-between items-start gap-4 mb-4">
-                      <span className="text-[10px] font-bold text-purple-400 bg-purple-950/20 border border-purple-500/20 px-2.5 py-0.5 rounded-lg">
+                      <span className="text-[10px] font-bold text-purple-750 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-500/20 px-2.5 py-0.5 rounded-lg">
                         {new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
                       {statusBadge}
                     </div>
 
-                    <h3 className="text-sm font-bold text-white leading-tight">{event.title}</h3>
-                    <p className="text-xs text-slate-400 mt-2.5 leading-relaxed line-clamp-3">{event.description}</p>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">{event.title}</h3>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-2.5 leading-relaxed line-clamp-3">{event.description}</p>
                     
-                    <div className="space-y-2 mt-5 text-[11px] text-slate-400 border-t border-slate-900/60 pt-4">
+                    <div className="space-y-2 mt-5 text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-200/60 dark:border-slate-900/60 pt-4">
                       <div className="flex items-center gap-1.5">
                         <Clock className="w-3.5 h-3.5 text-slate-500" />
                         <span>{new Date(event.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}</span>
@@ -338,7 +338,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                   <div className="mt-6 flex gap-2">
                     <button
                       onClick={() => openEventDetails(event)}
-                      className="flex-1 py-2 border border-slate-800 hover:bg-slate-800 text-[11px] font-semibold rounded-xl text-slate-300 transition-all cursor-pointer text-center"
+                      className="flex-1 py-2 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-[11px] font-semibold rounded-xl text-slate-700 dark:text-slate-300 transition-all cursor-pointer text-center"
                     >
                       View Details
                     </button>
@@ -349,7 +349,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                           setSelectedEventIdForManage(event.id)
                           setCurrentTab('event-dashboard')
                         }}
-                        className="p-2 border border-purple-500/20 hover:border-purple-500 bg-purple-500/10 hover:bg-purple-600 rounded-xl text-purple-300 hover:text-white transition-all cursor-pointer"
+                        className="p-2 border border-purple-500/20 hover:border-purple-500 bg-purple-50 dark:bg-purple-500/10 hover:bg-purple-600 rounded-xl text-purple-700 dark:text-purple-300 hover:text-white transition-all cursor-pointer"
                         title="Manage Event Committees, Attendance & Reports"
                       >
                         <Settings className="w-4 h-4" />
@@ -366,18 +366,18 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
       {/* PROPOSAL MODAL */}
       {showProposeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-lg glass-panel p-6 rounded-2xl shadow-2xl relative">
+          <div className="w-full max-w-lg glass-panel border border-slate-200 dark:border-slate-800/80 p-6 rounded-2xl shadow-2xl relative">
             <button
               onClick={() => setShowProposeModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white text-lg"
+              className="absolute top-4 right-4 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white text-lg"
             >
               &times;
             </button>
-            <h3 className="text-lg font-bold text-white mb-4">Propose Future Event</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Propose Future Event</h3>
             
             <form onSubmit={handleProposeEvent} className="space-y-4">
               <div>
-                <label className="block text-xs text-slate-400 font-semibold mb-1">Event Title</label>
+                <label className="block text-xs text-slate-550 dark:text-slate-400 font-semibold mb-1">Event Title</label>
                 <input
                   type="text"
                   value={propTitle}
@@ -388,7 +388,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 font-semibold mb-1">Description & Target Outcomes</label>
+                <label className="block text-xs text-slate-550 dark:text-slate-400 font-semibold mb-1">Description & Target Outcomes</label>
                 <textarea
                   value={propDesc}
                   onChange={(e) => setPropDesc(e.target.value)}
@@ -400,17 +400,17 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-slate-400 font-semibold mb-1">Proposed Date & Time</label>
+                  <label className="block text-xs text-slate-550 dark:text-slate-400 font-semibold mb-1">Proposed Date & Time</label>
                   <input
                     type="datetime-local"
                     value={propDate}
                     onChange={(e) => setPropDate(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl glass-input text-sm text-slate-300"
+                    className="w-full px-4 py-2.5 rounded-xl glass-input text-sm text-slate-650 dark:text-slate-300"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs text-slate-400 font-semibold mb-1">Location / Platform</label>
+                  <label className="block text-xs text-slate-550 dark:text-slate-400 font-semibold mb-1">Location / Platform</label>
                   <input
                     type="text"
                     value={propLoc}
@@ -422,7 +422,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 font-semibold mb-1">Attendee Capacity Limit</label>
+                <label className="block text-xs text-slate-550 dark:text-slate-400 font-semibold mb-1">Attendee Capacity Limit</label>
                 <input
                   type="number"
                   value={propMaxAttendees}
@@ -440,7 +440,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
                 ) : (
                   <>
-                    <Calendar className="w-3.5 h-3.5" /> Submit Event Proposal
+                    <Calendar className="w-3.5 h-3.5 text-white" /> Submit Event Proposal
                   </>
                 )}
               </button>
@@ -452,40 +452,40 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
       {/* DETAIL VIEW MODAL */}
       {selectedEvent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-xl glass-panel p-6 rounded-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-xl glass-panel border border-slate-200 dark:border-slate-800/80 p-6 rounded-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto text-left">
             <button
               onClick={() => setSelectedEvent(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg cursor-pointer"
+              className="absolute top-4 right-4 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white text-lg cursor-pointer"
             >
               &times;
             </button>
 
-            <h3 className="text-lg font-bold text-slate-900 mb-2">{selectedEvent.title}</h3>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{selectedEvent.title}</h3>
             
             <div className="flex flex-wrap gap-2 mb-6">
-              <span className="text-[10px] font-bold text-[#1e40af] bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-lg">
+              <span className="text-[10px] font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-500/30 px-2.5 py-0.5 rounded-lg">
                 Date: {new Date(selectedEvent.date).toLocaleDateString()} at {new Date(selectedEvent.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
               </span>
-              <span className="text-[10px] font-bold text-[#be185d] bg-[#fdf2f8] border border-[#be185d]/20 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
-                <MapPin className="w-3 h-3" /> {selectedEvent.location}
+              <span className="text-[10px] font-bold text-pink-700 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/40 border border-pink-200 dark:border-pink-550/20 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-pink-600 dark:text-pink-400" /> {selectedEvent.location}
               </span>
             </div>
 
             <div className="space-y-4 mb-6">
-              <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Event Description</h4>
-              <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+              <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide">Event Description</h4>
+              <p className="text-xs text-slate-605 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900/40 p-4 rounded-xl border border-slate-150 dark:border-slate-800/85">
                 {selectedEvent.description}
               </p>
             </div>
 
             {/* Attendance & Registration Board */}
             {selectedEvent.status !== 'proposal_pending' && selectedEvent.status !== 'rejected' && (
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/80 flex flex-col justify-between">
                 <div>
-                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide mb-3 flex items-center gap-1.5">
-                    <Users className="w-4 h-4 text-[#1e40af]" /> Attendance Roster ({selectedEventRegs.filter(r => r.status === 'registered').length} Registered)
+                  <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                    <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" /> Attendance Roster ({selectedEventRegs.filter(r => r.status === 'registered').length} Registered)
                   </h4>
-                  <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                     Register to reserve your slot. Only registered members can check in for attendance or review announcements.
                   </p>
                 </div>
@@ -494,7 +494,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                   {isUserRegistered(selectedEvent.id) ? (
                     <button
                       onClick={() => handleCancelRegistration(selectedEvent.id)}
-                      className="w-full py-2.5 border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold rounded-xl transition-all cursor-pointer"
+                      className="w-full py-2.5 border border-rose-200 dark:border-rose-950/25 bg-rose-50 dark:bg-rose-950/10 hover:bg-rose-100 dark:hover:bg-rose-950/20 text-rose-700 dark:text-rose-455 text-xs font-bold rounded-xl transition-all cursor-pointer"
                     >
                       Cancel Registration Slot
                     </button>
@@ -512,22 +512,22 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
 
             {/* Organizing Committee Applications section */}
             {selectedEvent.status !== 'proposal_pending' && selectedEvent.status !== 'rejected' && (
-              <div className="mt-4 border-t border-slate-100 pt-4">
+              <div className="mt-4 border-t border-slate-100 dark:border-slate-850 pt-4">
                 {(() => {
                   const myComm = selectedEventCommittees.find(c => c.user_id === user?.id)
                   if (myComm) {
                     if (myComm.status === 'pending') {
                       return (
-                        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 space-y-3">
+                        <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-250 dark:border-amber-500/20 text-xs text-amber-800 dark:text-amber-400 space-y-3">
                           <h4 className="font-bold uppercase tracking-wide flex items-center gap-1.5">
                             <Clock className="w-4 h-4 text-amber-600" /> Organizing Committee Application Pending
                           </h4>
-                          <p className="text-slate-600 leading-relaxed">
+                          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                             You applied to join the organizing committee as a <strong>{myComm.role === 'coordinator' ? 'Coordinator Lead' : 'Staff Member'}</strong> in the <strong>{myComm.department}</strong> department.
                           </p>
                           <button
                             onClick={() => handleCancelCommitteeApplication(selectedEvent.id)}
-                            className="px-3 py-1.5 border border-rose-200 hover:bg-rose-50 text-rose-600 rounded-lg transition-all text-[10px] font-bold cursor-pointer"
+                            className="px-3 py-1.5 border border-rose-200 dark:border-rose-950/20 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-rose-700 dark:text-rose-400 rounded-lg transition-all text-[10px] font-bold cursor-pointer"
                           >
                             Withdraw Application
                           </button>
@@ -535,11 +535,11 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                       )
                     } else {
                       return (
-                        <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-xs text-[#1e40af] space-y-2">
+                        <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-500/20 text-xs text-blue-700 dark:text-blue-400 space-y-2">
                           <h4 className="font-bold uppercase tracking-wide flex items-center gap-1.5">
-                            <Check className="w-4 h-4 text-[#1e40af]" /> Organizing Committee Member
+                            <Check className="w-4 h-4 text-blue-600 dark:text-blue-400" /> Organizing Committee Member
                           </h4>
-                          <p className="text-slate-600 leading-relaxed">
+                          <p className="text-slate-605 dark:text-slate-400 leading-relaxed">
                             You are part of the organizing committee as a <strong>{myComm.role === 'head' ? 'Committee Head' : myComm.role === 'coordinator' ? 'Coordinator Lead' : 'Staff Member'}</strong> in the <strong>{myComm.department}</strong> department!
                           </p>
                         </div>
@@ -547,23 +547,23 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                     }
                   } else if (!isOfficer) {
                     return (
-                      <form onSubmit={handleApplyCommittee} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4">
+                      <form onSubmit={handleApplyCommittee} className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/80 space-y-4">
                         <div>
-                          <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1 flex items-center gap-1.5">
-                            <Activity className="w-4 h-4 text-[#be185d]" /> Join Organizing Committee
+                          <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                            <Activity className="w-4 h-4 text-pink-600 dark:text-pink-400" /> Join Organizing Committee
                           </h4>
-                          <p className="text-[11px] text-slate-500 leading-relaxed">
+                          <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
                             Want to help run this event? Select your preferred department and position choice below to submit your staff application.
                           </p>
                         </div>
 
                         <div className="grid grid-cols-2 gap-3">
                           <div>
-                            <label className="block text-[10px] text-slate-500 font-semibold mb-1">Department</label>
+                            <label className="block text-[10px] text-slate-500 dark:text-slate-450 font-semibold mb-1">Department</label>
                             <select
                               value={applyDept}
                               onChange={(e) => setApplyDept(e.target.value)}
-                              className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
+                              className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-805 text-xs text-slate-800 dark:text-slate-100"
                             >
                               <option value="Logistics">Logistics</option>
                               <option value="Technical">Technical Operations</option>
@@ -574,11 +574,11 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                           </div>
 
                           <div>
-                            <label className="block text-[10px] text-slate-500 font-semibold mb-1">Position Choices</label>
+                            <label className="block text-[10px] text-slate-500 dark:text-slate-455 font-semibold mb-1">Position Choices</label>
                             <select
                               value={applyRole}
                               onChange={(e) => setApplyRole(e.target.value as any)}
-                              className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
+                              className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-805 text-xs text-slate-800 dark:text-slate-100"
                             >
                               <option value="member">Staff Member</option>
                               <option value="coordinator">Coordinator Lead</option>
@@ -589,7 +589,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
                         <button
                           type="submit"
                           disabled={applyingStaff}
-                          className="w-full py-2.5 bg-[#be185d] hover:bg-[#db2777] text-white text-xs font-bold rounded-xl shadow-lg cursor-pointer flex items-center justify-center gap-1"
+                          className="w-full py-2.5 bg-gradient-button text-white text-xs font-bold rounded-xl shadow-lg cursor-pointer flex items-center justify-center gap-1"
                         >
                           {applyingStaff ? (
                             <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
@@ -607,14 +607,14 @@ export const EventsPage: React.FC<EventsPageProps> = ({ setSelectedEventIdForMan
 
             {/* Proposal notes if pending or reviewed */}
             {selectedEvent.status === 'proposal_pending' && (
-              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-start gap-2 mt-4">
+              <div className="p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-205 dark:border-amber-900 rounded-xl text-xs text-amber-800 dark:text-amber-400 flex items-start gap-2 mt-4">
                 <Info className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
                 <span>This event is currently in the officer proposal queue. Registration will open once approved.</span>
               </div>
             )}
 
             {selectedEvent.approval_notes && (
-              <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200 text-[10px] text-slate-600">
+              <div className="mt-4 p-4 bg-slate-55 dark:bg-slate-900/40 rounded-xl border border-slate-205 dark:border-slate-800 text-[10px] text-slate-600 dark:text-slate-400">
                 <strong>Officer Review Notes:</strong> {selectedEvent.approval_notes}
               </div>
             )}

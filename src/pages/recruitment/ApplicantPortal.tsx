@@ -96,15 +96,15 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
 
   const renderStepper = (app: Application) => {
     const statusMap = {
-      pending: { step: 1, label: 'Application Received', color: 'text-amber-400 bg-amber-500/10 border-amber-500/20' },
-      screening: { step: 2, label: 'Under Review', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20' },
-      interview: { step: 3, label: 'Interview Scheduled', color: 'text-purple-400 bg-purple-500/10 border-purple-500/20' },
-      approved: { step: 4, label: 'Application Approved', color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' },
-      rejected: { step: 4, label: 'Application Declined', color: 'text-rose-400 bg-rose-500/10 border-rose-500/20' }
+      pending: { step: 1, label: 'Application Received', color: 'text-amber-700 bg-amber-50 border-amber-200 dark:text-amber-400 dark:bg-amber-500/10 dark:border-amber-500/20' },
+      screening: { step: 2, label: 'Under Review', color: 'text-blue-700 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-500/10 dark:border-blue-500/20' },
+      interview: { step: 3, label: 'Interview Scheduled', color: 'text-purple-700 bg-purple-50 border-purple-200 dark:text-purple-400 dark:bg-purple-500/10 dark:border-purple-500/20' },
+      approved: { step: 4, label: 'Application Approved', color: 'text-emerald-700 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20' },
+      rejected: { step: 4, label: 'Application Declined', color: 'text-rose-700 bg-rose-50 border-rose-200 dark:text-rose-400 dark:bg-rose-500/10 dark:border-rose-500/20' }
     }
 
     const currentStatus = app.status as keyof typeof statusMap
-    const currentStepConfig = statusMap[currentStatus] || { step: 1, label: 'Submitted', color: 'text-slate-400' }
+    const currentStepConfig = statusMap[currentStatus] || { step: 1, label: 'Submitted', color: 'text-slate-500 dark:text-slate-400' }
 
     const stepsList = [
       { id: 1, name: 'Submitted', desc: 'Application securely received and indexed in database.' },
@@ -114,35 +114,35 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
     ]
 
     return (
-      <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 space-y-6 text-left">
+      <div className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 space-y-6 text-left">
         <div>
-          <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest block">Real-time Tracker</span>
-          <h4 className="text-base font-extrabold text-white mt-1">Application Pipeline Tracker</h4>
-          <p className="text-[11px] text-slate-450 mt-1">
-            Tracking position: <span className="text-white font-bold">{app.recruitment_campaigns?.title}</span>
+          <span className="text-[10px] font-black text-purple-700 dark:text-purple-400 uppercase tracking-widest block">Real-time Tracker</span>
+          <h4 className="text-base font-extrabold text-slate-900 dark:text-white mt-1">Application Pipeline Tracker</h4>
+          <p className="text-[11px] text-slate-600 dark:text-slate-450 mt-1">
+            Tracking position: <span className="text-slate-850 dark:text-white font-bold">{app.recruitment_campaigns?.title}</span>
           </p>
         </div>
 
         {/* Vertical Timeline Stepper */}
-        <div className="space-y-6 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-900">
+        <div className="space-y-6 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-200 dark:before:bg-slate-900">
           {stepsList.map((st) => {
             let active = st.id <= currentStepConfig.step
             let isCurrent = st.id === currentStepConfig.step
             let isRejected = app.status === 'rejected' && st.id === 4
 
-            let dotColor = 'bg-slate-900 border-slate-800'
-            let textColor = 'text-slate-500'
+            let dotColor = 'bg-slate-100 dark:bg-slate-900 border-slate-205 dark:border-slate-800'
+            let textColor = 'text-slate-500 dark:text-slate-550'
 
             if (active) {
               if (isRejected) {
-                dotColor = 'bg-rose-500 border-rose-400 ring-4 ring-rose-500/20'
-                textColor = 'text-rose-450'
+                dotColor = 'bg-rose-500 border-rose-450 ring-4 ring-rose-500/20'
+                textColor = 'text-rose-700 dark:text-rose-450'
               } else if (isCurrent) {
                 dotColor = 'bg-purple-600 border-purple-500 ring-4 ring-purple-500/20'
-                textColor = 'text-purple-300 font-bold'
+                textColor = 'text-purple-750 dark:text-purple-300 font-bold'
               } else {
                 dotColor = 'bg-emerald-600 border-emerald-500'
-                textColor = 'text-slate-300'
+                textColor = 'text-slate-700 dark:text-slate-300'
               }
             }
 
@@ -161,7 +161,7 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
 
                 <div>
                   <h5 className={`text-xs ${textColor}`}>{st.name}</h5>
-                  <p className="text-[10px] text-slate-500 mt-0.5 leading-relaxed">{st.desc}</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-450 mt-0.5 leading-relaxed">{st.desc}</p>
                 </div>
               </div>
             )
@@ -169,20 +169,20 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
         </div>
 
         {/* Feedback / Call to Actions */}
-        <div className="pt-4 border-t border-slate-900/60 space-y-4">
+        <div className="pt-4 border-t border-slate-205 dark:border-slate-900/60 space-y-4">
           {app.feedback && (
-            <div className="p-3 bg-slate-950/30 rounded-xl border border-slate-900 flex items-start gap-2.5">
-              <MessageSquare className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+            <div className="p-3 bg-slate-50 dark:bg-slate-950/30 rounded-xl border border-slate-200 dark:border-slate-900 flex items-start gap-2.5">
+              <MessageSquare className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" />
               <div>
-                <p className="text-[10px] text-slate-400 font-bold">Reviewer Feedback Notes</p>
-                <p className="text-[11px] text-purple-300 mt-0.5 italic">"{app.feedback}"</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold">Reviewer Feedback Notes</p>
+                <p className="text-[11px] text-purple-750 dark:text-purple-300 mt-0.5 italic">"{app.feedback}"</p>
               </div>
             </div>
           )}
 
           {app.status === 'approved' && (
-            <div className="bg-emerald-950/20 border border-emerald-500/20 p-4 rounded-xl space-y-3">
-              <p className="text-xs text-emerald-400 leading-normal font-semibold">
+            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250 dark:border-emerald-500/20 p-4 rounded-xl space-y-3 text-left">
+              <p className="text-xs text-emerald-700 dark:text-emerald-450 leading-normal font-semibold">
                 Congratulations! You are officially accepted.
               </p>
               <button
@@ -202,14 +202,14 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
     <div className="space-y-8 text-left">
       
       {/* Dynamic welcome header */}
-      <div className="glass-panel p-8 rounded-3xl bg-gradient-premium relative overflow-hidden">
+      <div className="glass-panel p-8 rounded-3xl bg-gradient-premium relative overflow-hidden border border-slate-200 dark:border-slate-800/80">
         <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
         <div className="relative max-w-lg">
-          <span className="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-purple-950/40 border border-purple-500/30 text-purple-400">
+          <span className="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-500/30 text-purple-700 dark:text-purple-400">
             Recruitment Hub
           </span>
-          <h2 className="text-2xl font-black text-white mt-4 leading-tight">Join the OrgPlus Family</h2>
-          <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white mt-4 leading-tight">Join the OrgPlus Family</h2>
+          <p className="text-xs text-slate-650 dark:text-slate-400 mt-2 leading-relaxed">
             Apply to join our student organization campaigns. Submit responses to questionnaires, track review stages, and complete onboarding pipelines.
           </p>
         </div>
@@ -218,7 +218,7 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <span className="w-10 h-10 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></span>
-          <p className="text-xs text-slate-400 font-semibold">Loading portal details...</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Loading portal details...</p>
         </div>
       ) : (
         <div className="grid md:grid-cols-12 gap-8 items-start">
@@ -227,7 +227,7 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
           <div className="md:col-span-8 space-y-6">
             {myApps.length > 0 && (
               <div className="space-y-6">
-                <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">My Active Submissions</h3>
+                <h3 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">My Active Submissions</h3>
                 {myApps.map(app => (
                   <div key={app.id} className="grid md:grid-cols-1 gap-6">
                     {renderStepper(app)}
@@ -238,36 +238,36 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
 
             {/* Display open positions if any */}
             <div className="space-y-4 pt-4">
-              <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Available Roster Openings</h3>
+              <h3 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Available Roster Openings</h3>
               {campaigns.length === 0 ? (
-                <div className="glass-panel p-10 text-center rounded-2xl">
-                  <Users className="w-10 h-10 text-slate-650 mx-auto mb-3" />
-                  <p className="text-slate-350 font-bold text-xs">No Active Recruitment Campaigns</p>
-                  <p className="text-slate-550 text-[10px] mt-1">Position vacancy drives open seasonally. Keep checking back!</p>
+                <div className="glass-panel border border-slate-200 dark:border-slate-800/80 p-10 text-center rounded-2xl">
+                  <Users className="w-10 h-10 text-slate-400 dark:text-slate-500 mx-auto mb-3" />
+                  <p className="text-slate-700 dark:text-slate-350 font-bold text-xs">No Active Recruitment Campaigns</p>
+                  <p className="text-slate-500 text-[10px] mt-1">Position vacancy drives open seasonally. Keep checking back!</p>
                 </div>
               ) : (
                 <div className="grid md:grid-cols-1 gap-4">
                   {campaigns.map(c => {
                     const alreadyApplied = myApps.some(app => app.campaign_id === c.id)
                     return (
-                      <div key={c.id} className="p-5 rounded-2xl glass-panel border border-slate-850 hover:border-slate-800 transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                      <div key={c.id} className="p-5 rounded-2xl glass-panel border border-slate-200 dark:border-slate-850 hover:border-slate-300 dark:hover:border-slate-800 transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div className="text-left max-w-md">
-                          <span className="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase border border-purple-500/20 bg-purple-950/20 text-purple-400">
+                          <span className="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase border border-purple-200 dark:border-purple-500/20 bg-purple-50 dark:bg-purple-950/20 text-purple-700 dark:text-purple-400">
                             {c.type} position
                           </span>
-                          <h4 className="text-sm font-bold text-white mt-2">{c.title}</h4>
-                          <p className="text-xs text-slate-450 mt-1 leading-normal line-clamp-2">{c.description}</p>
+                          <h4 className="text-sm font-bold text-slate-900 dark:text-white mt-2">{c.title}</h4>
+                          <p className="text-xs text-slate-600 dark:text-slate-450 mt-1 leading-normal line-clamp-2">{c.description}</p>
                         </div>
 
                         <div className="shrink-0">
                           {alreadyApplied ? (
-                            <span className="px-3 py-1.5 rounded-lg bg-emerald-950/20 border border-emerald-500/20 text-emerald-400 text-xs font-bold flex items-center gap-1">
-                              <CheckCircle2 className="w-3.5 h-3.5" /> Applied
+                            <span className="px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-bold flex items-center gap-1">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-555" /> Applied
                             </span>
                           ) : (
                             <button
                               onClick={() => setSelectedCampaign(c)}
-                              className="px-4 py-2 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/20 hover:border-transparent text-xs font-bold rounded-xl transition-all cursor-pointer"
+                              className="px-4 py-2 bg-purple-50 dark:bg-purple-600/20 hover:bg-purple-600 text-purple-750 dark:text-purple-300 hover:text-white dark:hover:text-white border border-purple-250 dark:border-purple-500/20 hover:border-transparent text-xs font-bold rounded-xl transition-all cursor-pointer"
                             >
                               Apply Now
                             </button>
@@ -283,31 +283,31 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
 
           {/* RIGHT: Requirements / FAQ */}
           <div className="md:col-span-4 space-y-6">
-            <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 space-y-4">
-              <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wide flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-purple-400" /> Application Requirements
+            <div className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 space-y-4">
+              <h4 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-purple-600 dark:text-purple-400" /> Application Requirements
               </h4>
-              <ul className="space-y-3.5 text-xs text-slate-400">
+              <ul className="space-y-3.5 text-xs text-slate-600 dark:text-slate-400">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-555 shrink-0 mt-0.5" />
                   <span>Must be currently enrolled as a student in good standing.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-555 shrink-0 mt-0.5" />
                   <span>Include a link to a resume (Google Drive PDF / Github links preferred).</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-555 shrink-0 mt-0.5" />
                   <span>Complete all onboarding tasks upon application approval.</span>
                 </li>
               </ul>
             </div>
 
-            <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 space-y-4">
-              <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wide flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-blue-400" /> Need Help?
+            <div className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 space-y-4">
+              <h4 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-blue-600 dark:text-blue-400" /> Need Help?
               </h4>
-              <p className="text-xs text-slate-450 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-450 leading-relaxed">
                 Applicants who complete onboarding are promoted to official Member level automatically, unlocking the full schedule calendar. For feedback, reach out to executive coordinators.
               </p>
             </div>
@@ -319,19 +319,19 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
       {/* QUESTIONNAIRE MODAL */}
       {selectedCampaign && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-xl glass-panel p-6 rounded-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-xl glass-panel border border-slate-200 dark:border-slate-800/80 p-6 rounded-2xl shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setSelectedCampaign(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white text-lg"
+              className="absolute top-4 right-4 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white text-lg"
             >
               &times;
             </button>
-            <h3 className="text-base font-bold text-white mb-1">Apply for Recruitment</h3>
-            <p className="text-xs text-purple-400 font-bold mb-6">{selectedCampaign.title}</p>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">Apply for Recruitment</h3>
+            <p className="text-xs text-purple-705 dark:text-purple-400 font-bold mb-6">{selectedCampaign.title}</p>
             
             <form onSubmit={handleApplySubmit} className="space-y-5">
               <div>
-                <label className="block text-xs text-slate-350 font-semibold mb-1.5">
+                <label className="block text-xs text-slate-600 dark:text-slate-350 font-semibold mb-1.5">
                   1. Why are you interested in joining OrgPlus?
                 </label>
                 <textarea
@@ -344,7 +344,7 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
               </div>
 
               <div>
-                <label className="block text-xs text-slate-355 font-semibold mb-1.5">
+                <label className="block text-xs text-slate-600 dark:text-slate-355 font-semibold mb-1.5">
                   2. Outline any prior experience or leadership roles you have held.
                 </label>
                 <textarea
@@ -357,7 +357,7 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
               </div>
 
               <div>
-                <label className="block text-xs text-slate-360 font-semibold mb-1.5">
+                <label className="block text-xs text-slate-600 dark:text-slate-360 font-semibold mb-1.5">
                   3. Link to Resume / Academic Portfolio (Google Drive / GitHub)
                 </label>
                 <input
@@ -369,9 +369,9 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
                 />
               </div>
 
-              <div className="bg-slate-900/40 p-3 rounded-xl border border-slate-800 flex items-start gap-2">
+              <div className="bg-slate-50 dark:bg-slate-900/40 p-3 rounded-xl border border-slate-205 dark:border-slate-800 flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <span className="text-[10px] text-slate-400 leading-relaxed">
+                <span className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed">
                   By submitting, you agree that organization officers can view your profile responses for screening purposes.
                 </span>
               </div>
@@ -385,7 +385,7 @@ export const ApplicantPortal: React.FC<ApplicantPortalProps> = ({ setCurrentTab 
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
                 ) : (
                   <>
-                    <Send className="w-3.5 h-3.5" /> Submit Application Form
+                    <Send className="w-3.5 h-3.5 text-white" /> Submit Application Form
                   </>
                 )}
               </button>

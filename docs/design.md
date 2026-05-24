@@ -160,15 +160,15 @@ The core design primitive used throughout the application.
 
 ## 6. Color-Coded Role Badge System
 
-Roles are visually differentiated with consistent HSL-tailored color pairs:
+Roles are visually differentiated with consistent HSL-tailored color pairs that adjust for theme state:
 
-| Role | Badge Color | Border | Background |
+| Role | Badge Color | Tailwind Classes (Light Mode) | Tailwind Classes (Dark Mode) |
 |---|---|---|---|
-| Super Admin | Rose-400 | `border-red-500/30` | `bg-red-950/40` |
-| Officer | Blue-400 | `border-blue-500/30` | `bg-blue-950/40` |
-| Committee Member | Teal-400 | `border-teal-500/30` | `bg-teal-950/40` |
-| Member | Emerald-400 | `border-emerald-500/30` | `bg-emerald-950/40` |
-| Applicant | Amber-400 | `border-amber-500/30` | `bg-amber-950/40` |
+| Super Admin | Rose | `text-red-700 bg-red-50 border-red-200` | `dark:text-red-400 dark:bg-red-950/40 dark:border-red-500/30` |
+| Officer | Blue | `text-blue-700 bg-blue-50 border-blue-200` | `dark:text-blue-400 dark:bg-blue-950/40 dark:border-blue-500/30` |
+| Committee Member | Teal | `text-teal-700 bg-teal-50 border-teal-200` | `dark:text-teal-400 dark:bg-teal-950/40 dark:border-teal-500/30` |
+| Member | Emerald | `text-emerald-700 bg-emerald-50 border-emerald-200` | `dark:text-emerald-400 dark:bg-emerald-950/40 dark:border-emerald-500/30` |
+| Applicant | Amber | `text-amber-700 bg-amber-50 border-amber-200` | `dark:text-amber-400 dark:bg-amber-950/40 dark:border-amber-500/30` |
 
 ---
 
@@ -176,10 +176,10 @@ Roles are visually differentiated with consistent HSL-tailored color pairs:
 
 Consistent status indicators used across applications, events, and attendance:
 
-| Status | Color | Tailwind Classes |
-|---|---|---|
-| Approved / Present | Emerald | `text-emerald-400 bg-emerald-500/10 border-emerald-500/30` |
-| Pending / Absent | Amber | `text-amber-400 bg-amber-500/10 border-amber-500/30` |
+| Status | Color | Tailwind Classes (Light Mode) | Tailwind Classes (Dark Mode) |
+|---|---|---|---|
+| Approved / Present | Emerald | `text-emerald-700 bg-emerald-50 border-emerald-200` | `dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/30` |
+| Pending / Absent | Amber | `text-amber-700 bg-amber-50 border-amber-200` | `dark:text-amber-400 dark:bg-amber-500/10 dark:border-amber-500/30` |
 | Screening | Blue | `text-blue-400 bg-blue-500/10 border-blue-500/30` |
 | Interview | Purple | `text-purple-400 bg-purple-500/10 border-purple-500/30` |
 | Rejected / Error | Rose | `text-rose-400 bg-rose-500/10 border-rose-500/30` |

@@ -186,9 +186,9 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
 
   if (loading || !event) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 gap-4">
+      <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
         <span className="w-10 h-10 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></span>
-        <p className="text-xs text-slate-400 font-semibold">Configuring dashboard control deck...</p>
+        <p className="text-xs text-slate-550 dark:text-slate-400 font-semibold">Configuring dashboard control deck...</p>
       </div>
     )
   }
@@ -198,33 +198,33 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
   const absentCount = registeredRegs.filter(r => r.attendance_status === 'absent').length
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-left">
       
       {/* Back & Title Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-800 hover:bg-slate-800 text-[10px] font-bold rounded-xl text-slate-400 hover:text-white transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-205 dark:border-slate-805 hover:bg-slate-100 dark:hover:bg-slate-800 text-[10px] font-bold rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Schedule
         </button>
 
-        <div className="text-right">
-          <h2 className="text-lg font-black text-white">{event.title}</h2>
-          <p className="text-[10px] text-slate-400 mt-0.5">
-            Status: <span className="text-purple-400 font-bold capitalize">{event.status.replace('_', ' ')}</span>
+        <div className="text-left sm:text-right">
+          <h2 className="text-lg font-black text-slate-900 dark:text-white">{event.title}</h2>
+          <p className="text-[10px] text-slate-550 dark:text-slate-400 mt-0.5">
+            Status: <span className="text-purple-700 dark:text-purple-400 font-bold capitalize">{event.status.replace('_', ' ')}</span>
           </p>
         </div>
       </div>
 
       {/* Tabs list */}
-      <div className="flex border-b border-slate-900 gap-1.5 overflow-x-auto pb-1">
+      <div className="flex border-b border-slate-200 dark:border-slate-900 gap-1.5 overflow-x-auto pb-1">
         <button
           onClick={() => setActiveTab('attendees')}
           className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'attendees'
-              ? 'border-purple-500 text-purple-400 bg-purple-950/5'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'border-purple-600 text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/5'
+              : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
           }`}
         >
           <Users className="w-4 h-4" /> Attendee Check-ins
@@ -233,8 +233,8 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
           onClick={() => setActiveTab('committee')}
           className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'committee'
-              ? 'border-purple-500 text-purple-400 bg-purple-950/5'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'border-purple-600 text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/5'
+              : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
           }`}
         >
           <UserPlus className="w-4 h-4" /> Committee Planner
@@ -243,8 +243,8 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
           onClick={() => setActiveTab('announcements')}
           className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'announcements'
-              ? 'border-purple-500 text-purple-400 bg-purple-950/5'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'border-purple-600 text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/5'
+              : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
           }`}
         >
           <Megaphone className="w-4 h-4" /> Announcements Feed
@@ -253,8 +253,8 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
           onClick={() => setActiveTab('report')}
           className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'report'
-              ? 'border-purple-500 text-purple-400 bg-purple-950/5'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'border-purple-600 text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/5'
+              : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
           }`}
         >
           <FileSpreadsheet className="w-4 h-4" /> Post-Event Report
@@ -266,22 +266,22 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
         <div className="space-y-6">
           {/* Quick Metrics */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-slate-900/30 border border-slate-800/80 text-center">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800/80 text-center">
               <span className="text-[10px] text-slate-500 block">Total Registered</span>
-              <span className="text-xl font-bold text-white mt-1 block">{registeredRegs.length}</span>
+              <span className="text-xl font-bold text-slate-900 dark:text-white mt-1 block">{registeredRegs.length}</span>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/30 border border-slate-800/80 text-center">
-              <span className="text-[10px] text-emerald-500/80 block">Confirmed Present</span>
-              <span className="text-xl font-bold text-emerald-400 mt-1 block">{presentCount}</span>
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800/80 text-center">
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-500/80 block">Confirmed Present</span>
+              <span className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1 block">{presentCount}</span>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/30 border border-slate-800/80 text-center">
-              <span className="text-[10px] text-rose-500/80 block">Unexcused Absent</span>
-              <span className="text-xl font-bold text-rose-400 mt-1 block">{absentCount}</span>
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800/80 text-center">
+              <span className="text-[10px] text-rose-705 dark:text-rose-500/80 block">Unexcused Absent</span>
+              <span className="text-xl font-bold text-rose-600 dark:text-rose-400 mt-1 block">{absentCount}</span>
             </div>
           </div>
 
           {/* Roster Table */}
-          <div className="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+          <div className="glass-panel rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
             {registeredRegs.length === 0 ? (
               <div className="p-12 text-center text-slate-500 text-xs">
                 No attendees registered yet for this event.
@@ -289,37 +289,37 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
             ) : (
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-slate-950/40 border-b border-slate-800 text-slate-400">
+                  <tr className="bg-slate-50 dark:bg-slate-950/40 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400">
                     <th className="p-4 font-semibold">User Profile</th>
                     <th className="p-4 font-semibold">Registration Date</th>
                     <th className="p-4 font-semibold">Attendance Log</th>
                     <th className="p-4 font-semibold text-right">Quick Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-900">
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-900">
                   {registeredRegs.map(reg => (
-                    <tr key={reg.id} className="hover:bg-slate-900/20">
+                    <tr key={reg.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/20">
                       <td className="p-4 flex items-center gap-3">
                         <img
                           src={reg.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${reg.profiles?.full_name}`}
                           alt={reg.profiles?.full_name}
-                          className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700"
+                          className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                         />
                         <div>
-                          <p className="font-bold text-white">{reg.profiles?.full_name}</p>
+                          <p className="font-bold text-slate-800 dark:text-white">{reg.profiles?.full_name}</p>
                           <p className="text-[10px] text-slate-500">{reg.profiles?.email}</p>
                         </div>
                       </td>
-                      <td className="p-4 text-slate-400">
+                      <td className="p-4 text-slate-600 dark:text-slate-400">
                         {new Date(reg.registered_at).toLocaleDateString()}
                       </td>
                       <td className="p-4">
                         <span className={`px-2 py-0.5 rounded-lg text-[9px] font-bold ${
                           reg.attendance_status === 'present' 
-                            ? 'bg-emerald-950/20 border border-emerald-500/30 text-emerald-400'
+                            ? 'bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400'
                             : reg.attendance_status === 'excused'
-                            ? 'bg-blue-950/20 border border-blue-500/30 text-blue-400'
-                            : 'bg-rose-950/20 border border-rose-500/30 text-rose-400'
+                            ? 'bg-blue-50 dark:bg-blue-950/20 border border-blue-250 dark:border-blue-500/30 text-blue-700 dark:text-blue-400'
+                            : 'bg-rose-50 dark:bg-rose-950/20 border border-rose-250 dark:border-rose-500/30 text-rose-700 dark:text-rose-400'
                         }`}>
                           {reg.attendance_status}
                         </span>
@@ -328,19 +328,19 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                         <div className="flex gap-1 justify-end">
                           <button
                             onClick={() => handleCheckIn(reg.id, 'present')}
-                            className="px-2 py-1 bg-emerald-600/10 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/20 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
+                            className="px-2 py-1 bg-emerald-50 dark:bg-emerald-600/10 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-400 hover:text-white dark:hover:text-white border border-emerald-200 dark:border-emerald-500/20 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
                           >
                             Mark Present
                           </button>
                           <button
                             onClick={() => handleCheckIn(reg.id, 'absent')}
-                            className="px-2 py-1 bg-rose-600/10 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/20 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
+                            className="px-2 py-1 bg-rose-50 dark:bg-rose-600/10 hover:bg-rose-600 text-rose-700 dark:text-rose-400 hover:text-white dark:hover:text-white border border-rose-200 dark:border-rose-500/20 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
                           >
                             Mark Absent
                           </button>
                           <button
                             onClick={() => handleCheckIn(reg.id, 'excused')}
-                            className="px-2 py-1 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/20 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
+                            className="px-2 py-1 bg-blue-50 dark:bg-blue-600/10 hover:bg-blue-600 text-blue-700 dark:text-blue-400 hover:text-white dark:hover:text-white border border-blue-200 dark:border-blue-500/20 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
                           >
                             Excused
                           </button>
@@ -356,24 +356,24 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
       )}
 
       {activeTab === 'committee' && (
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 animate-in fade-in">
           
           {/* Assignment panel */}
-          <div className="md:col-span-1 glass-panel p-5 rounded-2xl border border-slate-200">
-            <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide mb-4">Assign Committee Lead</h4>
+          <div className="md:col-span-1 glass-panel p-5 rounded-2xl border border-slate-200 dark:border-slate-800/80">
+            <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-4">Assign Committee Lead</h4>
             
             {profiles.length === 0 ? (
               <p className="text-[10px] text-slate-500 leading-relaxed">
                 All organization members have already been allocated to committees for this event, or none are registered in the sandbox system.
               </p>
             ) : (
-              <form onSubmit={handleAssignCommittee} className="space-y-4">
+              <form onSubmit={handleAssignCommittee} className="space-y-4 text-left">
                 <div>
                   <label className="block text-[10px] text-slate-500 font-semibold mb-1">Select Member</label>
                   <select
                     value={selectedUserId}
                     onChange={(e) => setSelectedUserId(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-slate-100"
                   >
                     {profiles.map(p => (
                       <option key={p.id} value={p.id}>
@@ -388,7 +388,7 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                   <select
                     value={commDept}
                     onChange={(e) => setCommDept(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-805 text-xs text-slate-800 dark:text-slate-100"
                   >
                     <option value="Logistics">Logistics Coordinator</option>
                     <option value="Technical">Technical Operations</option>
@@ -403,7 +403,7 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                   <select
                     value={commRole}
                     onChange={(e) => setCommRole(e.target.value as any)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-850"
+                    className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-805 text-xs text-slate-800 dark:text-slate-100"
                   >
                     <option value="member">Staff Member</option>
                     <option value="coordinator">Coordinator Lead</option>
@@ -425,48 +425,48 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
           <div className="md:col-span-2 space-y-6">
             
             {/* Active Roster */}
-            <div className="glass-panel rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between">
+            <div className="glass-panel rounded-2xl border border-slate-200 dark:border-slate-805 overflow-hidden flex flex-col justify-between">
               <div>
-                <div className="bg-slate-50 p-4 border-b border-slate-200">
-                  <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Allocated Committee Roster</h4>
+                <div className="bg-slate-50 dark:bg-slate-950/20 p-4 border-b border-slate-200 dark:border-slate-900">
+                  <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide">Allocated Committee Roster</h4>
                 </div>
                 
                 {comms.filter(c => c.status !== 'pending').length === 0 ? (
-                  <div className="p-12 text-center text-slate-500 text-xs">
+                  <div className="p-12 text-center text-slate-550 text-xs">
                     No active committee assignments created. Use the left panel to delegate tasks!
                   </div>
                 ) : (
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="bg-slate-100/50 border-b border-slate-200 text-slate-550 text-[10px]">
+                      <tr className="bg-slate-100/50 dark:bg-slate-950/40 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[10px]">
                         <th className="p-4 font-semibold">User</th>
                         <th className="p-4 font-semibold">Department</th>
                         <th className="p-4 font-semibold">Committee Role</th>
                         <th className="p-4 font-semibold text-right">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-900">
                       {comms.filter(c => c.status !== 'pending').map(comm => (
-                        <tr key={comm.id} className="hover:bg-slate-50/50">
+                        <tr key={comm.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/20">
                           <td className="p-4 flex items-center gap-3">
                             <img
                               src={comm.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${comm.profiles?.full_name}`}
                               alt={comm.profiles?.full_name}
-                              className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200"
+                              className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                             />
                             <div>
-                              <p className="font-semibold text-slate-800">{comm.profiles?.full_name}</p>
-                              <p className="text-[9px] text-slate-400">{comm.profiles?.email}</p>
+                              <p className="font-semibold text-slate-805 dark:text-slate-200">{comm.profiles?.full_name}</p>
+                              <p className="text-[9px] text-slate-500">{comm.profiles?.email}</p>
                             </div>
                           </td>
-                          <td className="p-4 text-slate-700 font-bold">{comm.department}</td>
+                          <td className="p-4 text-slate-700 dark:text-slate-300 font-bold">{comm.department}</td>
                           <td className="p-4">
                             <span className={`px-2 py-0.5 rounded text-[8px] font-extrabold uppercase border ${
                               comm.role === 'head' 
-                                ? 'border-[#be185d]/30 bg-[#fdf2f8] text-[#be185d]' 
+                                ? 'border-[#be185d]/30 dark:border-[#be185d]/50 bg-[#fdf2f8] dark:bg-[#be185d]/20 text-[#be185d] dark:text-pink-400' 
                                 : comm.role === 'coordinator'
-                                ? 'border-blue-200 bg-blue-50 text-blue-750'
-                                : 'border-slate-200 bg-slate-100 text-slate-650'
+                                ? 'border-blue-200 dark:border-blue-500/20 bg-blue-50 dark:bg-blue-950/20 text-blue-750 dark:text-blue-300'
+                                : 'border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 text-slate-650 dark:text-slate-450'
                             }`}>
                               {comm.role}
                             </span>
@@ -474,7 +474,7 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                           <td className="p-4 text-right">
                             <button
                               onClick={() => handleRemoveCommittee(comm.user_id)}
-                              className="p-1.5 border border-rose-200 hover:bg-rose-50 text-rose-600 rounded-lg transition-all cursor-pointer inline-flex"
+                              className="p-1.5 border border-rose-200 dark:border-rose-950/20 hover:bg-rose-50 dark:hover:bg-rose-950/20 text-rose-600 dark:text-rose-400 rounded-lg transition-all cursor-pointer inline-flex"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -488,10 +488,10 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
             </div>
 
             {/* Pending Staff Applications */}
-            <div className="glass-panel rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between">
+            <div className="glass-panel rounded-2xl border border-slate-200 dark:border-slate-805 overflow-hidden flex flex-col justify-between">
               <div>
-                <div className="bg-amber-50/50 p-4 border-b border-slate-200">
-                  <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wide flex items-center gap-1.5">
+                <div className="bg-amber-50/50 dark:bg-amber-950/20 p-4 border-b border-slate-200 dark:border-slate-900">
+                  <h4 className="text-xs font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wide flex items-center gap-1.5">
                     <ClipboardList className="w-4 h-4 text-amber-600 animate-pulse" /> Pending Staff Applications Queue
                   </h4>
                 </div>
@@ -503,33 +503,33 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                 ) : (
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="bg-slate-100/50 border-b border-slate-200 text-slate-550 text-[10px]">
+                      <tr className="bg-slate-100/50 dark:bg-slate-950/40 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[10px]">
                         <th className="p-4 font-semibold">User</th>
                         <th className="p-4 font-semibold">Department</th>
                         <th className="p-4 font-semibold">Requested Role</th>
                         <th className="p-4 font-semibold text-right font-bold">Review Decision</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-900">
                       {comms.filter(c => c.status === 'pending').map(comm => (
-                        <tr key={comm.id} className="hover:bg-slate-50/50">
+                        <tr key={comm.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/20">
                           <td className="p-4 flex items-center gap-3">
                             <img
                               src={comm.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${comm.profiles?.full_name}`}
                               alt={comm.profiles?.full_name}
-                              className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200"
+                              className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                             />
                             <div>
-                              <p className="font-semibold text-slate-800">{comm.profiles?.full_name}</p>
-                              <p className="text-[9px] text-slate-400">{comm.profiles?.email}</p>
+                              <p className="font-semibold text-slate-805 dark:text-slate-200">{comm.profiles?.full_name}</p>
+                              <p className="text-[9px] text-slate-500">{comm.profiles?.email}</p>
                             </div>
                           </td>
-                          <td className="p-4 text-slate-700 font-bold">{comm.department}</td>
+                          <td className="p-4 text-slate-700 dark:text-slate-300 font-bold">{comm.department}</td>
                           <td className="p-4">
                             <span className={`px-2 py-0.5 rounded text-[8px] font-extrabold uppercase border ${
                               comm.role === 'coordinator'
-                                ? 'border-blue-200 bg-blue-50 text-blue-750'
-                                : 'border-slate-200 bg-slate-100 text-slate-650'
+                                ? 'border-blue-250 dark:border-blue-500/20 bg-blue-50 dark:bg-blue-950/25 text-blue-700 dark:text-blue-400'
+                                : 'border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                             }`}>
                               {comm.role}
                             </span>
@@ -538,13 +538,13 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                             <div className="flex gap-2 justify-end">
                               <button
                                 onClick={() => handleApproveCommittee(comm.user_id)}
-                                className="px-2 py-1 bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-200 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
+                                className="px-2 py-1 bg-emerald-50 dark:bg-emerald-600/10 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-250 dark:border-emerald-555/20 rounded text-[9px] font-semibold transition-all cursor-pointer"
                               >
                                 Approve
                               </button>
                               <button
                                 onClick={() => handleRemoveCommittee(comm.user_id)}
-                                className="px-2 py-1 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 hover:border-transparent rounded text-[9px] font-semibold transition-all cursor-pointer"
+                                className="px-2 py-1 bg-rose-50 dark:bg-rose-600/10 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-250 dark:border-rose-555/20 rounded text-[9px] font-semibold transition-all cursor-pointer"
                               >
                                 Decline
                               </button>
@@ -565,11 +565,11 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
       {activeTab === 'announcements' && (
         <div className="grid md:grid-cols-3 gap-6">
           {/* Post updates form */}
-          <div className="md:col-span-1 glass-panel p-5 rounded-2xl border border-slate-800">
-            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide mb-4">Post Announcement</h4>
-            <form onSubmit={handleCreateAnnouncement} className="space-y-4">
+          <div className="md:col-span-1 glass-panel p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <h4 className="text-xs font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wide mb-4">Post Announcement</h4>
+            <form onSubmit={handleCreateAnnouncement} className="space-y-4 text-left">
               <div>
-                <label className="block text-[10px] text-slate-400 font-semibold mb-1">Announcement Title</label>
+                <label className="block text-[10px] text-slate-500 dark:text-slate-455 font-semibold mb-1">Announcement Title</label>
                 <input
                   type="text"
                   placeholder="e.g. Swag details & Food schedule"
@@ -580,7 +580,7 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
               </div>
 
               <div>
-                <label className="block text-[10px] text-slate-400 font-semibold mb-1">Content Details</label>
+                <label className="block text-[10px] text-slate-500 dark:text-slate-455 font-semibold mb-1">Content Details</label>
                 <textarea
                   placeholder="Specify agenda shifts, item checklist, etc."
                   value={annContent}
@@ -594,30 +594,30 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                 type="submit"
                 className="w-full py-2.5 bg-gradient-button text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
               >
-                <Send className="w-4 h-4" /> Dispatch Alert
+                <Send className="w-4 h-4 text-white" /> Dispatch Alert
               </button>
             </form>
           </div>
 
           {/* Announcements feed */}
           <div className="md:col-span-2 space-y-4">
-            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wide">Announcements History</h4>
+            <h4 className="text-xs font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wide">Announcements History</h4>
             {anns.length === 0 ? (
-              <div className="glass-panel p-12 text-center rounded-2xl text-slate-500 text-xs">
+              <div className="glass-panel border border-slate-200 dark:border-slate-805 rounded-2xl text-slate-500 text-xs p-12 text-center">
                 No announcements dispatched for this event.
               </div>
             ) : (
               anns.map(ann => (
-                <div key={ann.id} className="p-4 rounded-xl glass-panel relative border border-slate-800">
+                <div key={ann.id} className="p-4 rounded-xl glass-panel relative border border-slate-200 dark:border-slate-800 text-left">
                   <div className="flex justify-between items-start gap-4">
-                    <h5 className="text-xs font-bold text-white leading-tight">{ann.title}</h5>
+                    <h5 className="text-xs font-bold text-slate-900 dark:text-white leading-tight">{ann.title}</h5>
                     <span className="text-[9px] text-slate-500">
                       {new Date(ann.created_at).toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300 mt-2 leading-relaxed whitespace-pre-wrap">{ann.content}</p>
+                  <p className="text-xs text-slate-650 dark:text-slate-300 mt-2 leading-relaxed whitespace-pre-wrap">{ann.content}</p>
                   
-                  <div className="mt-4 pt-3 border-t border-slate-900/60 flex items-center gap-2 text-[9px] text-slate-500">
+                  <div className="mt-4 pt-3 border-t border-slate-200/65 dark:border-slate-900/60 flex items-center gap-2 text-[9px] text-slate-500">
                     <img
                       src={ann.profiles?.avatar_url || `https://api.dicebear.com/7.x/adventurer/svg?seed=${ann.profiles?.full_name}`}
                       alt={ann.profiles?.full_name}
@@ -633,22 +633,22 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
       )}
 
       {activeTab === 'report' && (
-        <div className="max-w-2xl mx-auto glass-panel p-6 rounded-2xl border border-slate-800">
-          <div className="flex items-center gap-2 mb-6 pb-2 border-b border-slate-900">
-            <FileSpreadsheet className="w-5 h-5 text-purple-400" />
-            <h4 className="text-sm font-bold text-white">Post-Event Report & Audit Submission</h4>
+        <div className="max-w-2xl mx-auto glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+          <div className="flex items-center gap-2 mb-6 pb-2 border-b border-slate-200 dark:border-slate-900 text-left">
+            <FileSpreadsheet className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+            <h4 className="text-sm font-bold text-slate-900 dark:text-white">Post-Event Report & Audit Submission</h4>
           </div>
 
           {report && (
-            <div className="p-4 rounded-xl bg-emerald-950/10 border border-emerald-500/20 text-xs text-emerald-400 mb-6 flex items-start gap-2">
-              <Check className="w-4 h-4 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/10 border border-emerald-250 dark:border-emerald-500/20 text-xs text-emerald-700 dark:text-emerald-400 mb-6 flex items-start gap-2 text-left">
+              <Check className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600" />
               <span>An official post-event report was submitted by {report.profiles?.full_name || 'Officer'} on {new Date(report.submitted_at).toLocaleDateString()}. Event has been locked as Completed.</span>
             </div>
           )}
 
-          <form onSubmit={handlePostReport} className="space-y-4">
+          <form onSubmit={handlePostReport} className="space-y-4 text-left">
             <div>
-              <label className="block text-xs text-slate-400 font-semibold mb-1">Executive Summary / Outcomes</label>
+              <label className="block text-xs text-slate-500 dark:text-slate-455 font-semibold mb-1">Executive Summary / Outcomes</label>
               <textarea
                 value={repSummary}
                 onChange={(e) => setRepSummary(e.target.value)}
@@ -660,8 +660,8 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-slate-400 font-semibold mb-1 flex items-center gap-0.5">
-                  <DollarSign className="w-3.5 h-3.5" /> Total Budget Spent ($)
+                <label className="block text-xs text-slate-500 dark:text-slate-455 font-semibold mb-1 flex items-center gap-0.5">
+                  <DollarSign className="w-3.5 h-3.5 text-slate-500" /> Total Budget Spent ($)
                 </label>
                 <input
                   type="number"
@@ -673,7 +673,7 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 font-semibold mb-1">Documentation File Link (PDF/Drive)</label>
+                <label className="block text-xs text-slate-500 dark:text-slate-455 font-semibold mb-1">Documentation File Link (PDF/Drive)</label>
                 <input
                   type="url"
                   value={repDocLink}
@@ -693,7 +693,7 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ eventId, onBack 
                 <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
               ) : (
                 <>
-                  <Check className="w-3.5 h-3.5" /> Save & Complete Event Audit
+                  <Check className="w-3.5 h-3.5 text-white" /> Save & Complete Event Audit
                 </>
               )}
             </button>

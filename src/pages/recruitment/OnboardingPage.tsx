@@ -92,7 +92,7 @@ export const OnboardingPage: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-4">
         <span className="w-10 h-10 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></span>
-        <p className="text-xs text-slate-400 font-semibold">Configuring onboarding list...</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Configuring onboarding list...</p>
       </div>
     )
   }
@@ -163,18 +163,19 @@ export const OnboardingPage: React.FC = () => {
 
     return (
       <div className="space-y-6 text-left max-w-4xl mx-auto">
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        {/* Header Panel */}
+        <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h3 className="text-lg font-bold text-white">Onboarding Checklist Configurator</h3>
-            <p className="text-xs text-slate-400 mt-1">Add, update, or remove required tasks for newly approved members and officers.</p>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Onboarding Checklist Configurator</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Add, update, or remove required tasks for newly approved members and officers.</p>
           </div>
           
           <div className="shrink-0 flex items-center gap-2">
-            <span className="text-xs font-semibold text-slate-400">Target Role:</span>
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Target Role:</span>
             <select
               value={selectedTemplateId}
               onChange={(e) => setSelectedTemplateId(e.target.value)}
-              className="px-3 py-1.5 rounded-lg glass-input text-xs text-slate-350"
+              className="px-3 py-1.5 rounded-lg glass-input text-xs text-slate-700 dark:text-slate-300"
             >
               {allTemplates.map(t => (
                 <option key={t.id} value={t.id}>{t.title} ({t.role_target})</option>
@@ -186,36 +187,36 @@ export const OnboardingPage: React.FC = () => {
         <div className="grid md:grid-cols-12 gap-8 items-start">
           {/* Current Steps List */}
           <div className="md:col-span-7 space-y-4">
-            <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Current Steps Checklist</h4>
+            <h4 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Current Steps Checklist</h4>
             <div className="space-y-3">
               {activeTemp.steps.length === 0 ? (
-                <div className="glass-panel p-8 text-center rounded-xl">
-                  <p className="text-xs text-slate-405">No onboarding tasks defined yet.</p>
+                <div className="glass-panel p-8 text-center rounded-xl border border-slate-200 dark:border-slate-800">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">No onboarding tasks defined yet.</p>
                 </div>
               ) : (
                 activeTemp.steps.map((st, i) => (
-                  <div key={st.id} className="p-4 rounded-xl border border-slate-850 glass-panel flex items-start justify-between gap-4">
+                  <div key={st.id} className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 glass-panel flex items-start justify-between gap-4">
                     <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-[10px] text-slate-400 font-bold mt-0.5">
+                      <div className="w-5 h-5 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[10px] text-slate-600 dark:text-slate-400 font-bold mt-0.5">
                         {i + 1}
                       </div>
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs font-bold text-white">{st.title}</span>
+                          <span className="text-xs font-bold text-slate-900 dark:text-white">{st.title}</span>
                           {st.required && (
-                            <span className="px-1.5 py-0.5 rounded text-[8px] font-bold border border-rose-500/20 text-rose-455 bg-rose-950/15 uppercase">
+                            <span className="px-1.5 py-0.5 rounded text-[8px] font-bold border border-rose-300 text-rose-700 bg-rose-50 dark:border-rose-500/20 dark:text-rose-400 dark:bg-rose-950/15 uppercase">
                               Required
                             </span>
                           )}
                         </div>
-                        <p className="text-[10px] text-slate-400 mt-1">{st.description}</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">{st.description}</p>
                       </div>
                     </div>
 
                     <button
                       disabled={savingTemplate}
                       onClick={() => handleDeleteStep(activeTemp.id, st.id)}
-                      className="px-2.5 py-1 rounded bg-rose-950/20 border border-rose-900/30 text-[10px] font-bold text-rose-400 hover:bg-rose-900 hover:text-white transition-colors cursor-pointer"
+                      className="px-2.5 py-1 rounded bg-rose-50 border border-rose-200 text-[10px] font-bold text-rose-600 hover:bg-rose-600 hover:text-white hover:border-transparent dark:bg-rose-950/20 dark:border-rose-900/30 dark:text-rose-400 dark:hover:bg-rose-900 dark:hover:text-white transition-colors cursor-pointer"
                     >
                       Delete
                     </button>
@@ -227,10 +228,10 @@ export const OnboardingPage: React.FC = () => {
 
           {/* Add Step Form */}
           <div className="md:col-span-5 space-y-4">
-            <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Add Onboarding Step</h4>
-            <form onSubmit={handleAddStep} className="p-6 rounded-2xl glass-panel border border-slate-800 space-y-4">
+            <h4 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Add Onboarding Step</h4>
+            <form onSubmit={handleAddStep} className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800 space-y-4">
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Task Title</label>
+                <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">Task Title</label>
                 <input
                   type="text"
                   value={newStepTitle}
@@ -241,7 +242,7 @@ export const OnboardingPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1.5">Description</label>
+                <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">Description</label>
                 <textarea
                   value={newStepDesc}
                   onChange={(e) => setNewStepDesc(e.target.value)}
@@ -257,9 +258,9 @@ export const OnboardingPage: React.FC = () => {
                   id="requiredCheck"
                   checked={newStepRequired}
                   onChange={(e) => setNewStepRequired(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-800 text-purple-600 bg-slate-900"
+                  className="w-4 h-4 rounded border-slate-300 dark:border-slate-800 text-purple-600 bg-white dark:bg-slate-900"
                 />
-                <label htmlFor="requiredCheck" className="text-xs text-slate-400 font-semibold cursor-pointer">
+                <label htmlFor="requiredCheck" className="text-xs text-slate-600 dark:text-slate-400 font-semibold cursor-pointer">
                   Required step (blocking promotion)
                 </label>
               </div>
@@ -291,18 +292,18 @@ export const OnboardingPage: React.FC = () => {
     }
 
     return (
-      <div className="max-w-2xl mx-auto glass-panel p-8 rounded-3xl text-center space-y-6">
+      <div className="max-w-2xl mx-auto glass-panel p-8 rounded-3xl text-center space-y-6 border border-slate-200 dark:border-slate-800">
         <div className="w-20 h-20 bg-gradient-to-tr from-emerald-500 to-teal-400 rounded-full flex items-center justify-center shadow-xl shadow-emerald-500/10 mx-auto">
-          <ShieldCheck className="w-10 h-10 text-slate-900" />
+          <ShieldCheck className="w-10 h-10 text-white" />
         </div>
         <div>
-          <h2 className="text-2xl font-extrabold text-white leading-tight">Welcome, Official {user.role.replace('_', ' ')}!</h2>
-          <p className="text-xs text-slate-450 mt-2 leading-relaxed max-w-md mx-auto">
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white leading-tight">Welcome, Official {user.role.replace('_', ' ')}!</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed max-w-md mx-auto">
             You have successfully completed your onboarding tasks and have been promoted to an official role. You now have access to event schedules, committee setups, and announcements!
           </p>
         </div>
-        <div className="pt-4 border-t border-slate-900/60 flex justify-center">
-          <span className="px-4 py-2 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center gap-1.5">
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-900/60 flex justify-center">
+          <span className="px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 dark:bg-emerald-950/20 dark:border-emerald-500/30 dark:text-emerald-400 text-xs font-bold flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4" /> Ready to Collaborate
           </span>
         </div>
@@ -312,10 +313,10 @@ export const OnboardingPage: React.FC = () => {
 
   if (!myApp || !template) {
     return (
-      <div className="max-w-2xl mx-auto glass-panel p-12 text-center rounded-3xl space-y-4">
-        <Award className="w-12 h-12 text-slate-600 mx-auto" />
-        <h3 className="text-slate-300 font-bold text-sm">No Active Onboarding Flow</h3>
-        <p className="text-slate-500 text-xs leading-relaxed max-w-sm mx-auto">
+      <div className="max-w-2xl mx-auto glass-panel p-12 text-center rounded-3xl space-y-4 border border-slate-200 dark:border-slate-800">
+        <Award className="w-12 h-12 text-slate-400 dark:text-slate-600 mx-auto" />
+        <h3 className="text-slate-700 dark:text-slate-300 font-bold text-sm">No Active Onboarding Flow</h3>
+        <p className="text-slate-500 dark:text-slate-500 text-xs leading-relaxed max-w-sm mx-auto">
           Onboarding checklists are unlocked only after your recruitment application is reviewed and **Approved** by an organization officer.
         </p>
       </div>
@@ -331,17 +332,17 @@ export const OnboardingPage: React.FC = () => {
     <div className="max-w-3xl mx-auto space-y-6">
       
       {/* Title Panel */}
-      <div className="glass-panel p-6 rounded-2xl border border-slate-800">
-        <h3 className="text-lg font-bold text-white leading-tight">{template.title}</h3>
-        <p className="text-xs text-slate-400 mt-1">{template.description}</p>
+      <div className="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">{template.title}</h3>
+        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{template.description}</p>
 
         {/* Progress bar */}
         <div className="mt-6 space-y-2">
           <div className="flex justify-between items-center text-xs font-semibold">
-            <span className="text-purple-400">Onboarding Checklist Progress</span>
-            <span className="text-white">{completionPercentage}% Completed</span>
+            <span className="text-purple-600 dark:text-purple-400">Onboarding Checklist Progress</span>
+            <span className="text-slate-700 dark:text-white">{completionPercentage}% Completed</span>
           </div>
-          <div className="w-full h-2 rounded-full bg-slate-900 overflow-hidden">
+          <div className="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-900 overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500 ease-out"
               style={{ width: `${completionPercentage}%` }}
@@ -361,15 +362,15 @@ export const OnboardingPage: React.FC = () => {
               key={step.id} 
               className={`p-4 rounded-xl border glass-panel transition-all flex items-start gap-4 ${
                 isCompleted 
-                  ? 'border-emerald-500/20 bg-emerald-950/5' 
-                  : 'border-slate-800/80 hover:border-slate-800'
+                  ? 'border-emerald-200 dark:border-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-950/5' 
+                  : 'border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
               }`}
             >
               <button
                 disabled={isButtonDisabled}
                 onClick={() => handleCompleteStep(step.id)}
                 className={`shrink-0 mt-0.5 transition-colors cursor-pointer ${
-                  isCompleted ? 'text-emerald-400' : 'text-slate-500 hover:text-purple-400'
+                  isCompleted ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-400 hover:text-purple-600 dark:text-slate-500 dark:hover:text-purple-400'
                 }`}
               >
                 {isCompleted ? (
@@ -383,16 +384,16 @@ export const OnboardingPage: React.FC = () => {
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className={`text-xs font-bold ${isCompleted ? 'text-slate-400 line-through' : 'text-white'}`}>
+                  <span className={`text-xs font-bold ${isCompleted ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-900 dark:text-white'}`}>
                     {step.title}
                   </span>
                   {step.required && (
-                    <span className="px-1.5 py-0.5 rounded text-[8px] font-bold border border-rose-500/20 text-rose-400 bg-rose-950/10 uppercase">
+                    <span className="px-1.5 py-0.5 rounded text-[8px] font-bold border border-rose-300 text-rose-700 bg-rose-50 dark:border-rose-500/20 dark:text-rose-400 dark:bg-rose-950/10 uppercase">
                       Required
                     </span>
                   )}
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                   {step.description}
                 </p>
               </div>
@@ -401,7 +402,7 @@ export const OnboardingPage: React.FC = () => {
                 <button
                   disabled={updatingStep === step.id}
                   onClick={() => handleCompleteStep(step.id)}
-                  className="px-3 py-1.5 border border-purple-500/20 bg-purple-500/10 hover:bg-purple-500 hover:text-white text-[10px] text-purple-300 font-bold rounded-lg transition-all cursor-pointer"
+                  className="px-3 py-1.5 border border-purple-200 bg-purple-50 hover:bg-purple-600 hover:text-white hover:border-transparent text-[10px] text-purple-700 dark:border-purple-500/20 dark:bg-purple-500/10 dark:hover:bg-purple-500 dark:hover:text-white dark:text-purple-300 font-bold rounded-lg transition-all cursor-pointer"
                 >
                   Mark Done
                 </button>
@@ -412,9 +413,9 @@ export const OnboardingPage: React.FC = () => {
       </div>
 
       {/* Help box */}
-      <div className="p-4 rounded-xl bg-slate-900/40 border border-slate-800 flex items-start gap-2.5">
-        <Info className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
-        <span className="text-[10px] text-slate-400 leading-relaxed">
+      <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 dark:bg-slate-900/40 dark:border-slate-800 flex items-start gap-2.5">
+        <Info className="w-4 h-4 text-blue-500 dark:text-purple-400 shrink-0 mt-0.5" />
+        <span className="text-[10px] text-blue-700 dark:text-slate-400 leading-relaxed">
           Completed tasks are instantly tracked. Completing all **Required** onboarding tasks will automatically update your account privileges to an active Member / Officer level.
         </span>
       </div>

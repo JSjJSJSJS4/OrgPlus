@@ -115,53 +115,53 @@ export const MemberDashboard: React.FC = () => {
     <div className="space-y-8 text-left">
       
       {/* Dynamic welcome header */}
-      <div className="glass-panel p-8 rounded-3xl bg-gradient-premium relative overflow-hidden">
+      <div className="glass-panel p-8 rounded-3xl bg-gradient-premium relative overflow-hidden border border-slate-200 dark:border-slate-800/80">
         <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
         <div className="relative">
-          <span className="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+          <span className="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-emerald-55 border border-emerald-250 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-500/30 dark:text-emerald-400">
             Active Member Portal
           </span>
-          <h2 className="text-2xl font-black text-white mt-4 leading-tight">Welcome back, {user.full_name}!</h2>
-          <p className="text-xs text-slate-400 mt-1">Review event announcements, verify registrations, and audit attendance logs.</p>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-white mt-4 leading-tight">Welcome back, {user.full_name}!</h2>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Review event announcements, verify registrations, and audit attendance logs.</p>
         </div>
       </div>
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <span className="w-10 h-10 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></span>
-          <p className="text-xs text-slate-400 font-semibold">Configuring member panel...</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Configuring member panel...</p>
         </div>
       ) : (
         <>
           {/* METRICS ROW */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="p-5 rounded-xl glass-panel border border-slate-800/80">
-              <Calendar className="w-6 h-6 text-purple-400 mb-2" />
-              <span className="text-[10px] text-slate-500 block font-bold uppercase tracking-wider">Registered Events</span>
-              <span className="text-2xl font-black text-white mt-1 block">{registeredCount}</span>
+            <div className="p-5 rounded-xl glass-panel border border-slate-200 dark:border-slate-800/80">
+              <Calendar className="w-6 h-6 text-purple-600 dark:text-purple-400 mb-2" />
+              <span className="text-[10px] text-slate-550 dark:text-slate-400 block font-bold uppercase tracking-wider">Registered Events</span>
+              <span className="text-2xl font-black text-slate-900 dark:text-white mt-1 block">{registeredCount}</span>
             </div>
             
-            <div className="p-5 rounded-xl glass-panel border border-slate-800/80">
-              <UserCheck className="w-6 h-6 text-blue-400 mb-2" />
-              <span className="text-[10px] text-slate-500 block font-bold uppercase tracking-wider">Events Attended</span>
-              <span className="text-2xl font-black text-white mt-1 block">{attendedCount}</span>
+            <div className="p-5 rounded-xl glass-panel border border-slate-200 dark:border-slate-800/80">
+              <UserCheck className="w-6 h-6 text-blue-600 dark:text-blue-400 mb-2" />
+              <span className="text-[10px] text-slate-550 dark:text-slate-400 block font-bold uppercase tracking-wider">Events Attended</span>
+              <span className="text-2xl font-black text-slate-900 dark:text-white mt-1 block">{attendedCount}</span>
             </div>
-
-            <div className="p-5 rounded-xl glass-panel border border-slate-800/80">
-              <TrendingUp className="w-6 h-6 text-teal-400 mb-2" />
-              <span className="text-[10px] text-slate-500 block font-bold uppercase tracking-wider">Attendance Rate</span>
-              <span className="text-2xl font-black text-teal-400 mt-1 block">{attendanceRate}%</span>
+ 
+            <div className="p-5 rounded-xl glass-panel border border-slate-200 dark:border-slate-800/80">
+              <TrendingUp className="w-6 h-6 text-teal-655 dark:text-teal-400 mb-2" />
+              <span className="text-[10px] text-slate-550 dark:text-slate-400 block font-bold uppercase tracking-wider">Attendance Rate</span>
+              <span className="text-2xl font-black text-teal-600 dark:text-teal-400 mt-1 block">{attendanceRate}%</span>
             </div>
-
-            <div className="p-5 rounded-xl glass-panel border border-slate-800/80">
-              <Award className="w-6 h-6 text-amber-400 mb-2" />
-              <span className="text-[10px] text-slate-500 block font-bold uppercase tracking-wider">Onboarding Checklist</span>
-              <span className="text-2xl font-black text-emerald-400 mt-1 block text-sm flex items-center gap-1.5 font-extrabold">
+ 
+            <div className="p-5 rounded-xl glass-panel border border-slate-200 dark:border-slate-800/80">
+              <Award className="w-6 h-6 text-amber-600 dark:text-amber-400 mb-2" />
+              <span className="text-[10px] text-slate-550 dark:text-slate-400 block font-bold uppercase tracking-wider">Onboarding Checklist</span>
+              <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1 block text-sm flex items-center gap-1.5 font-extrabold">
                 <CheckCircle className="w-4 h-4 text-emerald-500" /> Completed
               </span>
             </div>
           </div>
-
+ 
           <div className="grid md:grid-cols-12 gap-8 items-start">
             
             {/* LEFT: Announcements & Upcoming Schedule */}
@@ -169,64 +169,64 @@ export const MemberDashboard: React.FC = () => {
               
               {/* Announcements megaphones */}
               <div className="space-y-4">
-                <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                  <Megaphone className="w-4 h-4 text-purple-400 animate-bounce" /> Organization Announcements
+                <h3 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                  <Megaphone className="w-4 h-4 text-purple-600 dark:text-purple-400 animate-bounce" /> Organization Announcements
                 </h3>
                 {announcements.length === 0 ? (
-                  <div className="p-8 rounded-2xl glass-panel text-center">
-                    <p className="text-slate-400 text-xs font-semibold">No recent announcements published.</p>
+                  <div className="p-8 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 text-center">
+                    <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">No recent announcements published.</p>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     {announcements.slice(0, 3).map((ann) => (
-                      <div key={ann.id} className="p-4 rounded-xl glass-panel border border-slate-850 text-left">
+                      <div key={ann.id} className="p-4 rounded-xl glass-panel border border-slate-200 dark:border-slate-850 text-left">
                         <div className="flex justify-between items-start gap-4 flex-wrap">
-                          <span className="text-[10px] font-bold text-purple-400 bg-purple-950/20 border border-purple-500/20 px-2 py-0.5 rounded">
+                          <span className="text-[10px] font-bold text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-500/20 px-2 py-0.5 rounded">
                             {ann.eventTitle}
                           </span>
-                          <span className="text-[9px] text-slate-500">
+                          <span className="text-[9px] text-slate-500 dark:text-slate-400">
                             {new Date(ann.created_at).toLocaleDateString()}
                           </span>
                         </div>
-                        <h4 className="text-xs font-bold text-white mt-2">{ann.title}</h4>
-                        <p className="text-xs text-slate-450 mt-1.5 leading-relaxed">{ann.content}</p>
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-white mt-2">{ann.title}</h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">{ann.content}</p>
                       </div>
                     ))}
                   </div>
                 )}
               </div>
-
+ 
               {/* Upcoming events calendar */}
               <div className="space-y-4 pt-2">
-                <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-blue-400" /> Upcoming Events Schedule
+                <h3 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400" /> Upcoming Events Schedule
                 </h3>
                 {upcomingEvents.length === 0 ? (
-                  <div className="p-8 rounded-2xl glass-panel text-center">
-                    <p className="text-slate-400 text-xs font-semibold">No upcoming events scheduled.</p>
+                  <div className="p-8 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 text-center">
+                    <p className="text-slate-500 dark:text-slate-400 text-xs font-semibold">No upcoming events scheduled.</p>
                   </div>
                 ) : (
                   <div className="grid md:grid-cols-2 gap-4">
                     {upcomingEvents.map((ev) => {
                       const registered = isUserRegistered(ev.id)
                       return (
-                        <div key={ev.id} className="p-5 rounded-2xl glass-panel border border-slate-850 flex flex-col justify-between">
+                        <div key={ev.id} className="p-5 rounded-2xl glass-panel border border-slate-200 dark:border-slate-850 flex flex-col justify-between">
                           <div>
                             <div className="flex justify-between items-center mb-3">
-                              <span className="text-[9px] font-bold text-slate-400 bg-slate-900 px-2 py-0.5 rounded">
+                              <span className="text-[9px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded">
                                 {new Date(ev.date).toLocaleDateString()}
                               </span>
                               {registered && (
-                                <span className="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase bg-emerald-950/25 border border-emerald-500/20 text-emerald-400">
+                                <span className="px-2 py-0.5 rounded text-[8px] font-extrabold uppercase bg-emerald-50 dark:bg-emerald-950/25 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400">
                                   Registered
                                 </span>
                               )}
                             </div>
-                            <h4 className="text-sm font-bold text-white">{ev.title}</h4>
-                            <p className="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed">{ev.description}</p>
+                            <h4 className="text-sm font-bold text-slate-900 dark:text-white">{ev.title}</h4>
+                            <p className="text-xs text-slate-605 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">{ev.description}</p>
                           </div>
-
-                          <div className="space-y-2 mt-4 pt-3 border-t border-slate-900/60 text-[10px] text-slate-450">
+ 
+                          <div className="space-y-2 mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-900/60 text-[10px] text-slate-550 dark:text-slate-400">
                             <div className="flex items-center gap-1.5">
                               <Clock className="w-3.5 h-3.5 text-slate-500" />
                               <span>{new Date(ev.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}</span>
@@ -236,12 +236,12 @@ export const MemberDashboard: React.FC = () => {
                               <span className="truncate">{ev.location}</span>
                             </div>
                           </div>
-
+ 
                           <div className="mt-4 flex gap-2">
                             {registered ? (
                               <button
                                 onClick={() => handleCancelRegistration(ev.id)}
-                                className="w-full py-2 border border-rose-950/20 bg-rose-950/10 hover:bg-rose-950/20 text-xs font-bold rounded-xl text-rose-400 transition-all cursor-pointer text-center"
+                                className="w-full py-2 border border-rose-200 dark:border-rose-950/20 bg-rose-50 dark:bg-rose-950/10 hover:bg-rose-100 dark:hover:bg-rose-950/20 text-xs font-bold rounded-xl text-rose-700 dark:text-rose-400 transition-all cursor-pointer text-center"
                               >
                                 Cancel Slot
                               </button>
@@ -261,17 +261,17 @@ export const MemberDashboard: React.FC = () => {
                 )}
               </div>
             </div>
-
+ 
             {/* RIGHT: Participation details & history logs */}
             <div className="md:col-span-4 space-y-6">
               
               {/* Check-in Log History */}
-              <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 space-y-4">
-                <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wide flex items-center gap-2">
-                  <ClipboardList className="w-4 h-4 text-teal-400" /> Check-in Roster History
+              <div className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 space-y-4">
+                <h4 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center gap-2">
+                  <ClipboardList className="w-4 h-4 text-teal-655 dark:text-teal-400" /> Check-in Roster History
                 </h4>
                 {registrations.length === 0 ? (
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-slate-500 leading-relaxed">
                     Once you check in at past events, your attendance status log will appear here.
                   </p>
                 ) : (
@@ -279,19 +279,19 @@ export const MemberDashboard: React.FC = () => {
                     {registrations.map((reg) => {
                       const ev = events.find(e => e.id === reg.event_id)
                       if (!ev) return null
-
-                      let badge = <span className="text-[9px] px-2 py-0.5 rounded border border-slate-800 bg-slate-900/50 text-slate-500 uppercase font-extrabold">Absent</span>
+ 
+                      let badge = <span className="text-[9px] px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/50 text-slate-600 dark:text-slate-500 uppercase font-extrabold">Absent</span>
                       if (reg.attendance_status === 'present') {
-                        badge = <span className="text-[9px] px-2 py-0.5 rounded border border-emerald-500/20 bg-emerald-950/10 text-emerald-400 uppercase font-extrabold">Present</span>
+                        badge = <span className="text-[9px] px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-950/10 text-emerald-700 dark:text-emerald-400 uppercase font-extrabold">Present</span>
                       } else if (reg.attendance_status === 'excused') {
-                        badge = <span className="text-[9px] px-2 py-0.5 rounded border border-amber-500/20 bg-amber-950/10 text-amber-400 uppercase font-extrabold">Excused</span>
+                        badge = <span className="text-[9px] px-2 py-0.5 rounded border border-amber-200 dark:border-amber-500/20 bg-amber-55 dark:bg-amber-950/10 text-amber-700 dark:text-amber-400 uppercase font-extrabold">Excused</span>
                       }
-
+ 
                       return (
-                        <div key={reg.id} className="flex justify-between items-center text-xs py-1.5 border-b border-slate-900/40 last:border-0">
+                        <div key={reg.id} className="flex justify-between items-center text-xs py-1.5 border-b border-slate-150 dark:border-slate-900/40 last:border-0">
                           <div className="text-left overflow-hidden pr-2">
-                            <p className="font-bold text-slate-350 truncate">{ev.title}</p>
-                            <p className="text-[9px] text-slate-550 mt-0.5">{new Date(ev.date).toLocaleDateString()}</p>
+                            <p className="font-bold text-slate-700 dark:text-slate-300 truncate">{ev.title}</p>
+                            <p className="text-[9px] text-slate-500 dark:text-slate-500 mt-0.5">{new Date(ev.date).toLocaleDateString()}</p>
                           </div>
                           <div className="shrink-0">{badge}</div>
                         </div>
@@ -300,23 +300,23 @@ export const MemberDashboard: React.FC = () => {
                   </div>
                 )}
               </div>
-
+ 
               {/* Onboarding materials */}
-              <div className="p-6 rounded-2xl glass-panel border border-slate-800/80 space-y-3">
-                <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wide flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-purple-400" /> Onboarding & Guidelines
+              <div className="p-6 rounded-2xl glass-panel border border-slate-200 dark:border-slate-800/80 space-y-3">
+                <h4 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-purple-600 dark:text-purple-400" /> Onboarding & Guidelines
                 </h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
                   You are an official member. You have completed the Code of Conduct signing and initial briefs. View your credentials or update seeds in the **Profile** tab.
                 </p>
               </div>
-
+ 
             </div>
-
+ 
           </div>
         </>
       )}
-
+ 
     </div>
   )
 }
